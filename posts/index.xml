@@ -1,20 +1,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
 		<title>Posts on Lora&#39;s Blog</title>
-		<link>https://JuneCly.github.com/posts/</link>
+		<link>https://JuneCly.github.io/posts/</link>
 		<description>Recent content in Posts on Lora&#39;s Blog</description>
 		<generator>Hugo -- gohugo.io</generator>
 		<language>zh-CN</language>
 		<copyright>This work is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.</copyright>
 		<lastBuildDate>Fri, 01 Oct 2021 16:15:09 +0800</lastBuildDate>
-		<atom:link href="https://JuneCly.github.com/posts/index.xml" rel="self" type="application/rss+xml" />
+		<atom:link href="https://JuneCly.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
 		
 		<item>
 			<title>Test</title>
-			<link>https://JuneCly.github.com/posts/test/</link>
+			<link>https://JuneCly.github.io/posts/test/</link>
 			<pubDate>Fri, 01 Oct 2021 16:15:09 +0800</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/test/</guid>
+			<guid>https://JuneCly.github.io/posts/test/</guid>
 			<description>测试用</description>
 			<content type="html"><![CDATA[<p>测试用</p>
 ]]></content>
@@ -22,10 +22,10 @@
 		
 		<item>
 			<title>The &#34;figure&#34; Shortcode</title>
-			<link>https://JuneCly.github.com/posts/the-figure-shortcode/</link>
+			<link>https://JuneCly.github.io/posts/the-figure-shortcode/</link>
 			<pubDate>Mon, 24 Dec 2018 12:29:41 +0800</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/the-figure-shortcode/</guid>
+			<guid>https://JuneCly.github.io/posts/the-figure-shortcode/</guid>
 			<description>Hugo has figure shortcode built in, so you can easily add figcaptions or hyperlink rel attributes to images. Documentations can be found here:
 https://gohugo.io/content-management/shortcodes/#figure
 This theme has 3 CSS classes made for figure elements:
@@ -74,10 +74,10 @@ This theme has 3 CSS classes made for figure elements:
 		
 		<item>
 			<title>Post With Featured Image</title>
-			<link>https://JuneCly.github.com/posts/post-with-featured-image/</link>
+			<link>https://JuneCly.github.io/posts/post-with-featured-image/</link>
 			<pubDate>Mon, 01 Oct 2018 16:15:09 +0800</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/post-with-featured-image/</guid>
+			<guid>https://JuneCly.github.io/posts/post-with-featured-image/</guid>
 			<description>Just define the image URL in the content’s front matter, the featured image will be displayed as the background.
 For example:
 ---images:- https://picsum.photos/1024/768/?random---This is an array, you can set multiple urls, only the first url will be used. These images is also used in Twitter Cards and the Open Graph metadata.</description>
@@ -93,10 +93,10 @@ For example:
 		
 		<item>
 			<title>Typography</title>
-			<link>https://JuneCly.github.com/posts/typography/</link>
+			<link>https://JuneCly.github.io/posts/typography/</link>
 			<pubDate>Sat, 29 Sep 2018 11:36:33 +0800</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/typography/</guid>
+			<guid>https://JuneCly.github.io/posts/typography/</guid>
 			<description>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
  An apple is a sweet, edible fruit produced by an apple tree (Malus pumila).</description>
 			<content type="html"><![CDATA[<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
@@ -180,10 +180,10 @@ For example:
 		
 		<item>
 			<title>Creating a New Theme</title>
-			<link>https://JuneCly.github.com/posts/creating-a-new-theme/</link>
+			<link>https://JuneCly.github.io/posts/creating-a-new-theme/</link>
 			<pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/creating-a-new-theme/</guid>
+			<guid>https://JuneCly.github.io/posts/creating-a-new-theme/</guid>
 			<description>Introduction This tutorial will show you how to create a simple theme in Hugo. I assume that you are familiar with HTML, the bash command line, and that you are comfortable using Markdown to format content. I&amp;rsquo;ll explain how Hugo uses templates and how you can organize your templates to create a theme. I won&amp;rsquo;t cover using CSS to style your theme.
 We&amp;rsquo;ll start with creating a new site with a very basic template.</description>
 			<content type="html"><![CDATA[<h2 id="introduction">Introduction</h2>
@@ -808,9 +808,9 @@ $ cat public/index.html
 &lt;html&gt;
 &lt;body&gt;
   
-    &lt;h1&gt;&lt;a href=&#34;https://JuneCly.github.com/post/second/&#34;&gt;second&lt;/a&gt;&lt;/h1&gt;
+    &lt;h1&gt;&lt;a href=&#34;https://JuneCly.github.io/post/second/&#34;&gt;second&lt;/a&gt;&lt;/h1&gt;
   
-    &lt;h1&gt;&lt;a href=&#34;https://JuneCly.github.com/post/first/&#34;&gt;first&lt;/a&gt;&lt;/h1&gt;
+    &lt;h1&gt;&lt;a href=&#34;https://JuneCly.github.io/post/first/&#34;&gt;first&lt;/a&gt;&lt;/h1&gt;
   
 &lt;/body&gt;
 &lt;/html&gt;
@@ -996,10 +996,10 @@ $ vi themes/zafta/layouts/_default/single.html
 		
 		<item>
 			<title>(Hu)go Template Primer</title>
-			<link>https://JuneCly.github.com/posts/goisforlovers/</link>
+			<link>https://JuneCly.github.io/posts/goisforlovers/</link>
 			<pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/goisforlovers/</guid>
+			<guid>https://JuneCly.github.io/posts/goisforlovers/</guid>
 			<description>Hugo uses the excellent Go html/template library for its template engine. It is an extremely lightweight engine that provides a very small amount of logic. In our experience that it is just the right amount of logic to be able to create a good static website. If you have used other template systems from different languages or frameworks you will find a lot of similarities in Go templates.
 This document is a brief primer on using Go templates.</description>
 			<content type="html"><![CDATA[<p>Hugo uses the excellent <a href="https://golang.org/">Go</a> <a href="https://golang.org/pkg/html/template/">html/template</a> library for
@@ -1224,7 +1224,7 @@ is to use &ldquo;with&rdquo; instead. With rebinds the context <code>.</code> wi
 and skips the block if the variable is absent:</p>
 <pre tabindex="0"><code>{{with .Site.Params.TwitterUser}}&lt;span class=&#34;twitter&#34;&gt;
 &lt;a href=&#34;https://twitter.com/{{.}}&#34; rel=&#34;author&#34;&gt;
-&lt;img src=&#34;https://JuneCly.github.com/images/twitter.png&#34; width=&#34;48&#34; height=&#34;48&#34; title=&#34;Twitter: {{.}}&#34;
+&lt;img src=&#34;https://JuneCly.github.io/images/twitter.png&#34; width=&#34;48&#34; height=&#34;48&#34; title=&#34;Twitter: {{.}}&#34;
  alt=&#34;Twitter&#34;&gt;&lt;/a&gt;
 &lt;/span&gt;{{end}}
 </code></pre><p>Finally, if you want to pull &ldquo;magic constants&rdquo; out of your layouts, you can do
@@ -1240,10 +1240,10 @@ so, such as in this example:</p>
 		
 		<item>
 			<title>Getting Started with Hugo</title>
-			<link>https://JuneCly.github.com/posts/hugoisforlovers/</link>
+			<link>https://JuneCly.github.io/posts/hugoisforlovers/</link>
 			<pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/hugoisforlovers/</guid>
+			<guid>https://JuneCly.github.io/posts/hugoisforlovers/</guid>
 			<description>Step 1. Install Hugo Go to Hugo releases and download the appropriate version for your OS and architecture.
 Save it somewhere specific as we will be using it in the next step.
 More complete instructions are available at Install Hugo
@@ -1309,10 +1309,10 @@ Having nearly instant feedback enables you to have your creativity flow without 
 		
 		<item>
 			<title>Migrate to Hugo from Jekyll</title>
-			<link>https://JuneCly.github.com/posts/migrate-from-jekyll/</link>
+			<link>https://JuneCly.github.io/posts/migrate-from-jekyll/</link>
 			<pubDate>Mon, 10 Mar 2014 00:00:00 +0000</pubDate>
 			
-			<guid>https://JuneCly.github.com/posts/migrate-from-jekyll/</guid>
+			<guid>https://JuneCly.github.io/posts/migrate-from-jekyll/</guid>
 			<description>Move static content to static Jekyll has a rule that any directory not starting with _ will be copied as-is to the _site output. Hugo keeps all static content under static. You should therefore move it all there. With Jekyll, something that looked like
 ▾ &amp;lt;root&amp;gt;/ ▾ images/ logo.png  should become
 ▾ &amp;lt;root&amp;gt;/ ▾ static/ ▾ images/ logo.png  Additionally, you&amp;rsquo;ll want any files that should reside at the root (such as CNAME) to be moved to static.</description>
