@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>preview on Chen LY</title>
+    <link>https://JuneCly.github.io/tags/preview/</link>
+    <description>Recent content in preview on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 15 Aug 2022 15:33:51 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/preview/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Test</title>
+      <link>https://JuneCly.github.io/post/test/</link>
+      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/test/</guid>
+      <description>&lt;p&gt;测试&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

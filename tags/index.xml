@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on Chen LY</title>
+    <link>https://JuneCly.github.io/tags/</link>
+    <description>Recent content in Tags on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 15 Aug 2022 15:33:51 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>preview</title>
+      <link>https://JuneCly.github.io/tags/preview/</link>
+      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/tags/preview/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>shortcodes</title>
+      <link>https://JuneCly.github.io/tags/shortcodes/</link>
+      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/tags/shortcodes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tag-6</title>
+      <link>https://JuneCly.github.io/tags/tag-6/</link>
+      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/tags/tag-6/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

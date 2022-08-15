@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Chen LY</title>
+    <link>https://JuneCly.github.io/</link>
+    <description>Recent content on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Mon, 15 Aug 2022 15:33:51 +0800</lastBuildDate>
+    
+        <atom:link href="https://JuneCly.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Test</title>
+      <link>https://JuneCly.github.io/post/test/</link>
+      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/test/</guid>
+      
+        <description>&lt;p&gt;测试&lt;/p&gt;
+&lt;h2 id=&#34;paragraph-and-line-breaks&#34;&gt;Paragraph and line breaks&lt;/h2&gt;
+&lt;p&gt;A paragraph is simply one or more consecutive lines of text. In markdown source code, paragraphs are separated by more than one blank lines. In Typora, you only need to press &lt;code&gt;Return&lt;/code&gt; to create a new paragraph.&lt;/p&gt;
+&lt;p&gt;Press &lt;code&gt;Shift&lt;/code&gt; + &lt;code&gt;Return&lt;/code&gt; to create a single line break. However, most markdown parser will ignore single line break, to make other markdown parsers recognize your line break, you can leave two whitespace at the end of the line, or insert &lt;code&gt;&amp;lt;br/&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;headers&#34;&gt;Headers&lt;/h2&gt;
+&lt;p&gt;Headers use 1-6 hash characters at the start of the line, corresponding to header levels 1-6. For example:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-markdown&#34; data-lang=&#34;markdown&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;# This is an H1
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;## This is an H2
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#75715e&#34;&gt;###### This is an H6
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;In typora, input ‘#’s followed by title content, and press &lt;code&gt;Return&lt;/code&gt; key will create a header.&lt;/p&gt;
+&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes&lt;/h2&gt;
+&lt;p&gt;Markdown uses email-style &amp;gt; characters for block quoting. They are presented as:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;This is a blockquote with two paragraphs. This is first paragraph.&lt;/p&gt;
+&lt;p&gt;This is second pragraph.Vestibulum enim wisi, viverra nec, fringilla in, laoreet vitae, risus.&lt;/p&gt;
+&lt;p&gt;This is another blockquote with one paragraph. There is three empty line to seperate two blockquote.&lt;/p&gt;
+&lt;p&gt;这是一段中文测试。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In typora, just input ‘&amp;gt;’ followed by quote contents a block quote is  generated. Typora will insert proper ‘&amp;gt;’ or line break for you. Block quote inside anther block quote is allowed by adding additional levels of ‘&amp;gt;’.&lt;/p&gt;
+&lt;h2 id=&#34;lists&#34;&gt;Lists&lt;/h2&gt;
+&lt;p&gt;Input &lt;code&gt;* list item 1&lt;/code&gt; will create an un-ordered list, the &lt;code&gt;*&lt;/code&gt; symbol can be replace with &lt;code&gt;+&lt;/code&gt; or &lt;code&gt;-&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Input &lt;code&gt;1. list item 1&lt;/code&gt; will create an ordered list, their markdown source code is like:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Red&lt;/li&gt;
+&lt;li&gt;Green&lt;/li&gt;
+&lt;li&gt;Blue&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;Red&lt;/li&gt;
+&lt;li&gt;Green&lt;/li&gt;
+&lt;li&gt;Blue&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;task-list&#34;&gt;Task List&lt;/h2&gt;
+&lt;p&gt;Task lists are lists with items marked as either &lt;code&gt;[ ]&lt;/code&gt; or &lt;code&gt;[x]&lt;/code&gt; (incomplete or complete). For example:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; a task list item&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; list syntax required&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; normal &lt;strong&gt;formatting&lt;/strong&gt;, @mentions, #1234 refs&lt;/li&gt;
+&lt;li&gt;&lt;input disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; incomplete&lt;/li&gt;
+&lt;li&gt;&lt;input checked=&#34;&#34; disabled=&#34;&#34; type=&#34;checkbox&#34;&gt; completed&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;You can change the complete/incomplete state by click the checkbox before the item.&lt;/p&gt;</description>
+      
+    </item>
+    
+  </channel>
+</rss>
