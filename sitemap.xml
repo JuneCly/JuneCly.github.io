@@ -2,71 +2,57 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://JuneCly.github.io/tags/alexnet/</loc>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/post/alexnet/</loc>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
     <loc>https://JuneCly.github.io/categories/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://JuneCly.github.io/categories/docs/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <loc>https://JuneCly.github.io/tags/cnn/</loc>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://JuneCly.github.io/categories/index/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <loc>https://JuneCly.github.io/categories/paper/</loc>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/post/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/tags/preview/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/tags/shortcodes/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/categories/shortcodes/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/tags/tag-6/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/tags/</loc>
-    <lastmod>2022-08-15T15:33:51+08:00</lastmod>
+    <lastmod>2022-08-22T15:57:49+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>

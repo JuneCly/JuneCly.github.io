@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Posts on Chen LY</title>
-    <link>https://JuneCly.github.io/post/</link>
-    <description>Recent content in Posts on Chen LY</description>
+    <title>paper on Chen LY</title>
+    <link>https://JuneCly.github.io/categories/paper/</link>
+    <description>Recent content in paper on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 22 Aug 2022 15:57:49 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 22 Aug 2022 15:57:49 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/categories/paper/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AlexNet</title>
       <link>https://JuneCly.github.io/post/alexnet/</link>
@@ -14,15 +14,6 @@
       
       <guid>https://JuneCly.github.io/post/alexnet/</guid>
       <description>&lt;p&gt;AlexNet在2012的ImageNet的竞赛中获得了冠军，该模型由Hintom和他的学生Alex Krizhevsky等人提出。 AlexNet由5个卷积层和3个全连接层构成，并首次使用ReLU、LRN、Dropout等技巧来提高网络的准确率。&lt;/p&gt;</description>
-    </item>
-    
-    <item>
-      <title>Test</title>
-      <link>https://JuneCly.github.io/post/test/</link>
-      <pubDate>Mon, 15 Aug 2022 15:33:51 +0800</pubDate>
-      
-      <guid>https://JuneCly.github.io/post/test/</guid>
-      <description>&lt;p&gt;测试&lt;/p&gt;</description>
     </item>
     
   </channel>
