@@ -6,10 +6,45 @@
     <description>Recent content on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 22 Aug 2022 15:57:49 +0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Aug 2022 13:36:02 +0800</lastBuildDate>
     
         <atom:link href="https://JuneCly.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>VGG</title>
+      <link>https://JuneCly.github.io/post/vgg/</link>
+      <pubDate>Sat, 27 Aug 2022 13:36:02 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/vgg/</guid>
+      
+        <description>&lt;p&gt;VGG是由牛津大学视觉几何小组（&lt;strong&gt;V&lt;/strong&gt;isual &lt;strong&gt;G&lt;/strong&gt;eometry &lt;strong&gt;G&lt;/strong&gt;roup）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。&lt;/p&gt;
+&lt;p&gt;论文：&lt;a href=&#34;https://arxiv.org/pdf/1409.1556.pdf&#34;&gt;Very Deep Convolutional Networks for Large-Scale Image Recognition&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-vgg网络架构&#34;&gt;1. VGG网络架构&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/VGG02.png&#34; alt=&#34;VGG convnet configuration&#34;&gt;&lt;/p&gt;
+&lt;p&gt;VGG网络由5层卷积层，3层全连接层以及softmax输出层构成，层与层之间使用max pooling（最大池化）分开。作者根据具体卷积层的不同，共设计了6种网络结构，如上图所示，分别是A、A-LRN、B、C、D、E。这6种结构的网络深度从11层到19层。其中，D和E结构即是我们所熟知的VGG16和VGG19。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/VGG01.jpg&#34; alt=&#34;VGG16&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图为VGG16的网络结构图。第1层卷积层由2个conv3-64组成，第2层卷积层由2个conv3-128组成，第3层卷积层由3个conv3-256组成，第4层卷积层由3个conv3-512组成，第5层卷积层由3个conv3-512组成，后接3个全连接层，前两个FC输出通道数为4096，后1个FC输出通道数为1000，最后经过softmax。共计16层。&lt;/p&gt;
+&lt;h2 id=&#34;2-网络特点&#34;&gt;2. 网络特点&lt;/h2&gt;
+&lt;h3 id=&#34;21-结构简单&#34;&gt;2.1 结构简单&lt;/h3&gt;
+&lt;p&gt;作者在文中提出的6种网络结构虽在细节上有所不同，但VGG总体的网络结构保持一致，即5卷积+3全连接+softmax，并且层与层之间使用maxpool分开。所有隐层的激活函数均为ReLU。&lt;/p&gt;
+&lt;h3 id=&#34;22-小卷积核&#34;&gt;2.2 小卷积核&lt;/h3&gt;
+&lt;p&gt;VGG使用多个小卷积核（3x3）来代替一个较大的卷积层。例如，2个3x3的卷积层相当于1个5x5卷积，3个3x3卷积相当于1个7x7卷积。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/VGG03.png&#34; alt=&#34;感受野&#34;&gt;&lt;/p&gt;
+&lt;p&gt;使用小卷积核有两点好处：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;减少模型参数量&lt;/li&gt;
+&lt;li&gt;因卷积核变小二导致的层数增加，可以增加模型的非线性表达能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;23-小池化核&#34;&gt;2.3 小池化核&lt;/h3&gt;
+&lt;p&gt;相比于AlexNet的3x3的池化核，VGG全部采用2x2的池化核。&lt;/p&gt;
+&lt;h3 id=&#34;24-通道数更多&#34;&gt;2.4 通道数更多&lt;/h3&gt;
+&lt;p&gt;更多的通道数可以表示更多的图像特征，VGG网络每个卷积层都对通道数进行了翻倍操作，直至增大到512个通道数。这样就可以提取出更多的信息。&lt;/p&gt;
+&lt;h3 id=&#34;25-全连接转卷积&#34;&gt;2.5 全连接转卷积&lt;/h3&gt;
+&lt;p&gt;VGG在&lt;strong&gt;测试阶段&lt;/strong&gt;将训练阶段的3个全连接层替换为3个卷积层，这样做的优点是可以处理任意大小尺寸的图片输入，并减少特征位置对分类的影响。（注：这个特点是作者参考了OverFeat的工作思路。）&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/VGG04.png&#34; alt=&#34;测试阶段全连接转卷积&#34;&gt;&lt;/p&gt;</description>
+      
+    </item>
     
     <item>
       <title>AlexNet</title>

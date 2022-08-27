@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Mon, 22 Aug 2022 15:57:49 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 Aug 2022 13:36:02 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>VGG</title>
+      <link>https://JuneCly.github.io/post/vgg/</link>
+      <pubDate>Sat, 27 Aug 2022 13:36:02 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/vgg/</guid>
+      <description>&lt;p&gt;VGG是由牛津大学视觉几何小组（&lt;strong&gt;V&lt;/strong&gt;isual &lt;strong&gt;G&lt;/strong&gt;eometry &lt;strong&gt;G&lt;/strong&gt;roup）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>AlexNet</title>
       <link>https://JuneCly.github.io/post/alexnet/</link>

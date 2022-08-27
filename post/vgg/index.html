@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Chen LY</title>
+  <title>VGG - Chen LY</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -22,8 +22,10 @@
 
 <meta name="mobile-web-app-capable" content="yes">
 
-<meta name="author" content="chen LY" />
-  <meta name="description" content="Hello World." />
+<meta name="author" content="Chen LY" />
+  <meta name="description" content="VGG是由牛津大学视觉几何小组（Visual Geometry Group）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。
+" />
+
   <meta name="keywords" content="Hugo, theme, jane" />
 
 
@@ -34,8 +36,8 @@
 <meta name="generator" content="Hugo 0.97.1" />
 
 
-<link rel="canonical" href="https://JuneCly.github.io/" />
-<link href="/index.xml" rel="alternate" type="application/rss+xml" title="Chen LY" />
+<link rel="canonical" href="https://JuneCly.github.io/post/vgg/" />
+
 
 
 
@@ -58,15 +60,20 @@
 
 
 
-<meta property="og:title" content="Chen LY" />
-<meta property="og:description" content="Hello World." />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://JuneCly.github.io/" />
+<meta property="og:title" content="VGG" />
+<meta property="og:description" content="VGG是由牛津大学视觉几何小组（Visual Geometry Group）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JuneCly.github.io/post/vgg/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-08-27T13:36:02+08:00" />
+<meta property="article:modified_time" content="2022-08-27T13:36:02+08:00" />
 
-<meta itemprop="name" content="Chen LY">
-<meta itemprop="description" content="Hello World."><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Chen LY"/>
-<meta name="twitter:description" content="Hello World."/>
+<meta itemprop="name" content="VGG">
+<meta itemprop="description" content="VGG是由牛津大学视觉几何小组（Visual Geometry Group）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。"><meta itemprop="datePublished" content="2022-08-27T13:36:02+08:00" />
+<meta itemprop="dateModified" content="2022-08-27T13:36:02+08:00" />
+<meta itemprop="wordCount" content="889">
+<meta itemprop="keywords" content="VGG,CNN," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="VGG"/>
+<meta name="twitter:description" content="VGG是由牛津大学视觉几何小组（Visual Geometry Group）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -265,141 +272,138 @@
     <main id="main" class="main bg-llight">
       <div class="content-wrapper">
         <div id="content" class="content container">
-          
-<section id="posts" class="posts">
-  
-  
+          <article class="post bg-white">
     
-  
-  
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
+    <header class="post-header">
+      <h1 class="post-title">VGG</h1>
       
-      <a class="post-link" href="/post/vgg/">VGG</a>
-    </h1>
+      <div class="post-meta">
+        <time datetime="2022-08-27" class="post-time">
+          2022-08-27
+        </time>
+        <div class="post-category">
+            <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
+            <a href="https://JuneCly.github.io/categories/paper/"> paper </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
     
-    <div class="post-meta">
-      <time datetime="2022-08-27" class="post-time">
-        2022-08-27
-      </time>
-      <div class="post-category">
-          <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
-          <a href="https://JuneCly.github.io/categories/paper/"> paper </a>
-          
-        </div>
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
     
-    <div class="post-summary">
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-vgg网络架构">1. VGG网络架构</a></li>
+    <li><a href="#2-网络特点">2. 网络特点</a>
+      <ul>
+        <li><a href="#21-结构简单">2.1 结构简单</a></li>
+        <li><a href="#22-小卷积核">2.2 小卷积核</a></li>
+        <li><a href="#23-小池化核">2.3 小池化核</a></li>
+        <li><a href="#24-通道数更多">2.4 通道数更多</a></li>
+        <li><a href="#25-全连接转卷积">2.5 全连接转卷积</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
       <p>VGG是由牛津大学视觉几何小组（<strong>V</strong>isual <strong>G</strong>eometry <strong>G</strong>roup）提出的一种深层卷积网络，在2014年的ILSVRC比赛中获得了分类任务的亚军（同年该项冠军为GoogLeNet）和定位任务的冠军。</p>
+<p>论文：<a href="https://arxiv.org/pdf/1409.1556.pdf">Very Deep Convolutional Networks for Large-Scale Image Recognition</a></p>
+<h2 id="1-vgg网络架构">1. VGG网络架构</h2>
+<p><img src="/image/VGG02.png" alt="VGG convnet configuration"></p>
+<p>VGG网络由5层卷积层，3层全连接层以及softmax输出层构成，层与层之间使用max pooling（最大池化）分开。作者根据具体卷积层的不同，共设计了6种网络结构，如上图所示，分别是A、A-LRN、B、C、D、E。这6种结构的网络深度从11层到19层。其中，D和E结构即是我们所熟知的VGG16和VGG19。</p>
+<p><img src="/image/VGG01.jpg" alt="VGG16"></p>
+<p>上图为VGG16的网络结构图。第1层卷积层由2个conv3-64组成，第2层卷积层由2个conv3-128组成，第3层卷积层由3个conv3-256组成，第4层卷积层由3个conv3-512组成，第5层卷积层由3个conv3-512组成，后接3个全连接层，前两个FC输出通道数为4096，后1个FC输出通道数为1000，最后经过softmax。共计16层。</p>
+<h2 id="2-网络特点">2. 网络特点</h2>
+<h3 id="21-结构简单">2.1 结构简单</h3>
+<p>作者在文中提出的6种网络结构虽在细节上有所不同，但VGG总体的网络结构保持一致，即5卷积+3全连接+softmax，并且层与层之间使用maxpool分开。所有隐层的激活函数均为ReLU。</p>
+<h3 id="22-小卷积核">2.2 小卷积核</h3>
+<p>VGG使用多个小卷积核（3x3）来代替一个较大的卷积层。例如，2个3x3的卷积层相当于1个5x5卷积，3个3x3卷积相当于1个7x7卷积。</p>
+<p><img src="/image/VGG03.png" alt="感受野"></p>
+<p>使用小卷积核有两点好处：</p>
+<ul>
+<li>减少模型参数量</li>
+<li>因卷积核变小二导致的层数增加，可以增加模型的非线性表达能力。</li>
+</ul>
+<h3 id="23-小池化核">2.3 小池化核</h3>
+<p>相比于AlexNet的3x3的池化核，VGG全部采用2x2的池化核。</p>
+<h3 id="24-通道数更多">2.4 通道数更多</h3>
+<p>更多的通道数可以表示更多的图像特征，VGG网络每个卷积层都对通道数进行了翻倍操作，直至增大到512个通道数。这样就可以提取出更多的信息。</p>
+<h3 id="25-全连接转卷积">2.5 全连接转卷积</h3>
+<p>VGG在<strong>测试阶段</strong>将训练阶段的3个全连接层替换为3个卷积层，这样做的优点是可以处理任意大小尺寸的图片输入，并减少特征位置对分类的影响。（注：这个特点是作者参考了OverFeat的工作思路。）</p>
+<p><img src="/image/VGG04.png" alt="测试阶段全连接转卷积"></p>
     </div>
-    <div class="read-more">
-      <a href="/post/vgg/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
 
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/alexnet/">AlexNet</a>
-    </h1>
     
-    <div class="post-meta">
-      <time datetime="2022-08-22" class="post-time">
-        2022-08-22
-      </time>
-      <div class="post-category">
-          <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
-          <a href="https://JuneCly.github.io/categories/paper/"> paper </a>
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://JuneCly.github.io/tags/vgg/">VGG</a>
+          <a href="https://JuneCly.github.io/tags/cnn/">CNN</a>
           
         </div>
+
       
-      
-      
-    </div>
-  </header>
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/alexnet/">
+            <span class="next-text nav-default">AlexNet</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
   
-  <div class="post-content">
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
     
-    <div class="post-summary">
-      <p>AlexNet在2012的ImageNet的竞赛中获得了冠军，该模型由Hintom和他的学生Alex Krizhevsky等人提出。 AlexNet由5个卷积层和3个全连接层构成，并首次使用ReLU、LRN、Dropout等技巧来提高网络的准确率。</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/alexnet/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
 
-  
-    <article class="post bg-white">
-  <header class="post-header">
-    <h1 class="post-title">
-      
-      <a class="post-link" href="/post/test/">Test</a>
-    </h1>
-    
-    <div class="post-meta">
-      <time datetime="2022-08-15" class="post-time">
-        2022-08-15
-      </time>
-      
-      
-      
-      
-    </div>
-  </header>
-  
-  <div class="post-content">
-    
-    <div class="post-summary">
-      <p>测试</p>
-    </div>
-    <div class="read-more">
-      <a href="/post/test/" class="read-more-link">Read more</a>
-    </div>
-    
-  </div>
-</article>
-
-  
-</section>
-
-
-
-
-
-
-  
-  
   
 
   
-  
-
-  
-  
-
-  
-  
-
-  
-  
-
-
-
-
 
         </div>
       </div>
