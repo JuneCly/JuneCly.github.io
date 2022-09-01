@@ -6,7 +6,16 @@
     <description>Recent content in cv on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 27 Aug 2022 13:36:02 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/categories/cv/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Sep 2022 10:57:09 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/categories/cv/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GoogLeNet</title>
+      <link>https://JuneCly.github.io/post/googlenet/</link>
+      <pubDate>Thu, 01 Sep 2022 10:57:09 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/googlenet/</guid>
+      <description>&lt;p&gt;GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>VGG</title>
       <link>https://JuneCly.github.io/post/vgg/</link>

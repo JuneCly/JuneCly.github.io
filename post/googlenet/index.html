@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>GoogLeNet - Chen LY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Chen LY" />
+  <meta name="description" content="GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.1" />
+
+
+<link rel="canonical" href="https://JuneCly.github.io/post/googlenet/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa4b2b9f31b5c6d0b683db81157a9226e17b06e61911791ab547242a4a0556f2.css" integrity="sha256-&#43;ksrnzG1xtC2g9uBFXqSJuF7BuYZEXkatUckKkoFVvI=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="GoogLeNet" />
+<meta property="og:description" content="GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JuneCly.github.io/post/googlenet/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-09-01T10:57:09+08:00" />
+<meta property="article:modified_time" content="2022-09-01T10:57:09+08:00" />
+
+<meta itemprop="name" content="GoogLeNet">
+<meta itemprop="description" content="GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。"><meta itemprop="datePublished" content="2022-09-01T10:57:09+08:00" />
+<meta itemprop="dateModified" content="2022-09-01T10:57:09+08:00" />
+<meta itemprop="wordCount" content="1996">
+<meta itemprop="keywords" content="GoogLeNet,CNN," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="GoogLeNet"/>
+<meta name="twitter:description" content="GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Chen LY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Chen LY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">GoogLeNet</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-09-01" class="post-time">
+          2022-09-01
+        </time>
+        <div class="post-category">
+            <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
+            <a href="https://JuneCly.github.io/categories/paper/"> paper </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#part-1--goolenet">Part 1 : GooLeNet</a>
+      <ul>
+        <li><a href="#abstract--introduction">Abstract &amp; Introduction</a></li>
+        <li><a href="#motivation-and-high-level-considerations">Motivation and High Level Considerations</a></li>
+        <li><a href="#architectural-details">Architectural Details</a></li>
+        <li><a href="#googlenet">GoogLeNet</a></li>
+        <li><a href="#conclusions">Conclusions</a></li>
+      </ul>
+    </li>
+    <li><a href="#part-2--inception系列">Part 2 : Inception系列</a>
+      <ul>
+        <li><a href="#inception-v2">Inception V2</a></li>
+        <li><a href="#inception-v3">Inception V3</a></li>
+        <li><a href="#inception-v4">Inception V4</a></li>
+        <li><a href="#inception-resnet">Inception ResNet</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。</p>
+<h2 id="part-1--goolenet">Part 1 : GooLeNet</h2>
+<p>论文：<a href="https://arxiv.org/pdf/1409.4842.pdf">Going Deeper with Convolutions</a></p>
+<h3 id="abstract--introduction">Abstract &amp; Introduction</h3>
+<p>GoogLeNet在ILSVRC14的分类和检测比赛中达到了新高度。这种网络结构提高了网络内计算资源的利用率，在保持计算量不变的同时增加网络的宽度和深度。GoogLeNet的网络架构思想基于Hebbian原则和多尺度处理的直觉，并且提出的Inception模块可以增加网络的深度。</p>
+<h3 id="motivation-and-high-level-considerations">Motivation and High Level Considerations</h3>
+<p>要提高深度神经网络的性能，最直接的方法就是增大规模。增大网络规模的方式有两种：</p>
+<ul>
+<li>增加网络深度（网络层数量）</li>
+<li>增加网络宽度（每层的神经元数量）</li>
+</ul>
+<p>但直接增大网络规模的这种方法存在两个主要缺点：</p>
+<ul>
+<li>更大的规模意味着更多的参数，这会使得规模大的网络会更容易过拟合；</li>
+<li>更大的规模会造成计算资源的急剧增加，如果增加的部分的效率并不高，那么大量的计算资源都因此被浪费了。</li>
+</ul>
+<p>解决这两个问题的最根本的方法就是将网络结构（包括卷积层内部）彻底从全连接（fully connected）变为稀疏连接（sparsely connected），对此有生物系统模拟和Arora等人的研究可佐证。但在实际应用中，将全连接变为稀疏连接后计算量并没有很大提升，这是因为现有硬件是针对密集矩阵进行计算优化的。由此提出Inception模块，在使用现有的计算稠密稀疏矩阵的硬件设备的条件下，利用稀疏连接提高网络的性能。</p>
+<h3 id="architectural-details">Architectural Details</h3>
+<h4 id="inception-module">Inception module</h4>
+<p><img src="/image/GoogLeNet01.png" alt="inception module a"></p>
+<p>Inception v1模块，将1x1，3x3，5x5 conv和3x3 pooling组成并联网络。一方面增加了网络的宽度，另一方面增加了网络对不同尺度的适应性（不同大小的卷积核支路所对应的感受野不同）。</p>
+<h4 id="inception-module-with-dimension-reductions">Inception module with dimension reductions</h4>
+<p>对于最初设计的Inception模块，虽然5x5的卷积核较少，但当网络达到一定规模后，仍然会产生巨大的计算量。为了解决这个问题，作者引入1x1的卷积核进行降维。对Inception v1的改进如下图所示：</p>
+<p><img src="/image/GoogLeNet03.png" alt="inception module b"></p>
+<p>改动后的结构有两个优点：</p>
+<ul>
+<li>通过降维，可以减少模型参数量；</li>
+<li>新增1x1卷积后可以带来更多的非线性变换，提高模型表达能力。</li>
+</ul>
+<h3 id="googlenet">GoogLeNet</h3>
+<p>GoogLeNet的网络细节如下表所示：</p>
+<p><img src="/image/GoogLeNet02.png" alt="GoogLeNet incarnation of the Inception architecture"></p>
+<p>网络的一些特点如下：</p>
+<ul>
+<li>网络采用了模块化的结构，使用Inception mudule，便于修改网络结构。</li>
+<li>包括Inception在内的所有卷积都使用修正线性激活（ReLU）。</li>
+<li>网络使用average pooling代替了全连接层，但仍需要保留dropout。</li>
+<li><strong>梯度回传</strong>：为了避免梯度消失，网络中额外增加了2个辅助分类器（softmax）用于向前传播梯度。（辅助分类器只在训练时使用）</li>
+</ul>
+<h3 id="conclusions">Conclusions</h3>
+<p>将最佳稀疏结构稠密化是提高计算机视觉神经网络的有效方法。相比于浅且窄的网络，这种方法的优点在于只需适度增加计算量，性能就显著提升。</p>
+<h2 id="part-2--inception系列">Part 2 : Inception系列</h2>
+<p>论文：</p>
+<p><a href="https://arxiv.org/pdf/1512.00567.pdf">Rethinking the Inception Architecture for Computer Vision</a></p>
+<p><a href="https://arxiv.org/pdf/1602.07261.pdf">Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning</a></p>
+<h3 id="inception-v2">Inception V2</h3>
+<h4 id="4条设计原则">4条设计原则</h4>
+<p>文章提出了4条设计原则，并依据这4条原则对Inception进行改进：</p>
+<ol>
+<li>网络浅层慎用bottleneck</li>
+<li>高维特征更适合在网络局部处理</li>
+<li>网络聚合可以通过低维嵌入</li>
+<li>平衡网络的深度和宽度</li>
+</ol>
+<h4 id="inception-v2-结构">Inception V2 结构</h4>
+<p><img src="/image/GoogLeNet04.png" alt="Inception v2"></p>
+<p>Inception v2相对于v1做的改进是使用多个小卷积核代替一个大卷积核（如使用2个3x3的卷积代替原来的1个5x5卷积），这样可以有效减少模型的参数量，增加模型的深度。</p>
+<p>此外，Inception v2还引入了BN，加速网络训练，解决梯度消失。</p>
+<p><img src="/image/GoogLeNet05.png" alt="Inception v2"></p>
+<p>在此基础上，作者提出可以使用多个非对称的小尺寸卷积核堆叠，代替一个大卷积核（比如用1xn和nx1代替nxn）。需要注意的是，这种结构在前几层的效果并不好，当特征图的尺寸在12到20之间时使用的效果会更好一些。</p>
+<p><img src="/image/GoogLeNet06.png" alt="Inception v2"></p>
+<p>结合对称卷积和非对称卷积，增加网络宽度。</p>
+<h3 id="inception-v3">Inception V3</h3>
+<p>Inception v3中作者将7x7卷积分解成了3个3x3卷积，v3中使用的Aug loss里使用了BN进行regularization。</p>
+<h4 id="降低特征图大小">降低特征图大小</h4>
+<p><img src="/image/GoogLeNet07.png" alt="传统下采样"></p>
+<p>传统的两种下采样方式如上图所示，要么先pooling再Inception（这种方法的缺点是池化会造成信息的丢失），要么先Inception再Pooling（这种方法的缺点是计算量增大）。故两种方法都不可取。作者提出了一种新的降低特征图大小的方法，如下图所示：</p>
+<p><img src="/image/GoogLeNet08.png" alt="inception下采样"></p>
+<p>让池化和卷积并行执行（stride=2），最后再将特征图进行组合。</p>
+<h3 id="inception-v4">Inception V4</h3>
+<h4 id="整体网络结构">整体网络结构</h4>
+<p>相比于v2/v3，Inception v4的网络结构更加简介同意，并使用了更多的Inception模块。下图为Inception v4的网络结构。</p>
+<p><img src="/image/GoogLeNet09.png" alt="inception v4整体网络结构"></p>
+<p>下图为Inception v4的stem模块。</p>
+<p><img src="/image/GoogLeNet10.png" alt="inception v4 stem module"></p>
+<h3 id="inception-resnet">Inception ResNet</h3>
+<p>Inception ResNet将Inception模块与残差连接思想结合，该系列有Inception-ResNet-v1和Inception-ResNet-v2，经验证，残差连接能够显著加速Inception的训练。</p>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://JuneCly.github.io/tags/googlenet/">GoogLeNet</a>
+          <a href="https://JuneCly.github.io/tags/cnn/">CNN</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/vgg/">
+            <span class="next-text nav-default">VGG</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://JuneCly.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        chen LY
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.dee43230127a73d039a734510fa896c89c3c7ce0cf0be0c7a7433f8fd69b76dc.js" integrity="sha256-3uQyMBJ6c9A5pzRRD6iWyJw8fODPC&#43;DHp0M/j9abdtw=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

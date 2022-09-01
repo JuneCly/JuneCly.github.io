@@ -6,10 +6,97 @@
     <description>Recent content on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sat, 27 Aug 2022 13:36:02 +0800</lastBuildDate>
+    <lastBuildDate>Thu, 01 Sep 2022 10:57:09 +0800</lastBuildDate>
     
         <atom:link href="https://JuneCly.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>GoogLeNet</title>
+      <link>https://JuneCly.github.io/post/googlenet/</link>
+      <pubDate>Thu, 01 Sep 2022 10:57:09 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/googlenet/</guid>
+      
+        <description>&lt;p&gt;GoogLeNet是google提出的基于Inception模块的串并联网络架构，并获得了2014年ILSVRC比赛的分类任务的冠军（同年该项亚军为VGG）。Inception模块及其迭代改进的版本可以提升模型的泛化能力、降低模型参数。&lt;/p&gt;
+&lt;h2 id=&#34;part-1--goolenet&#34;&gt;Part 1 : GooLeNet&lt;/h2&gt;
+&lt;p&gt;论文：&lt;a href=&#34;https://arxiv.org/pdf/1409.4842.pdf&#34;&gt;Going Deeper with Convolutions&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;abstract--introduction&#34;&gt;Abstract &amp;amp; Introduction&lt;/h3&gt;
+&lt;p&gt;GoogLeNet在ILSVRC14的分类和检测比赛中达到了新高度。这种网络结构提高了网络内计算资源的利用率，在保持计算量不变的同时增加网络的宽度和深度。GoogLeNet的网络架构思想基于Hebbian原则和多尺度处理的直觉，并且提出的Inception模块可以增加网络的深度。&lt;/p&gt;
+&lt;h3 id=&#34;motivation-and-high-level-considerations&#34;&gt;Motivation and High Level Considerations&lt;/h3&gt;
+&lt;p&gt;要提高深度神经网络的性能，最直接的方法就是增大规模。增大网络规模的方式有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;增加网络深度（网络层数量）&lt;/li&gt;
+&lt;li&gt;增加网络宽度（每层的神经元数量）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;但直接增大网络规模的这种方法存在两个主要缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;更大的规模意味着更多的参数，这会使得规模大的网络会更容易过拟合；&lt;/li&gt;
+&lt;li&gt;更大的规模会造成计算资源的急剧增加，如果增加的部分的效率并不高，那么大量的计算资源都因此被浪费了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;解决这两个问题的最根本的方法就是将网络结构（包括卷积层内部）彻底从全连接（fully connected）变为稀疏连接（sparsely connected），对此有生物系统模拟和Arora等人的研究可佐证。但在实际应用中，将全连接变为稀疏连接后计算量并没有很大提升，这是因为现有硬件是针对密集矩阵进行计算优化的。由此提出Inception模块，在使用现有的计算稠密稀疏矩阵的硬件设备的条件下，利用稀疏连接提高网络的性能。&lt;/p&gt;
+&lt;h3 id=&#34;architectural-details&#34;&gt;Architectural Details&lt;/h3&gt;
+&lt;h4 id=&#34;inception-module&#34;&gt;Inception module&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet01.png&#34; alt=&#34;inception module a&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Inception v1模块，将1x1，3x3，5x5 conv和3x3 pooling组成并联网络。一方面增加了网络的宽度，另一方面增加了网络对不同尺度的适应性（不同大小的卷积核支路所对应的感受野不同）。&lt;/p&gt;
+&lt;h4 id=&#34;inception-module-with-dimension-reductions&#34;&gt;Inception module with dimension reductions&lt;/h4&gt;
+&lt;p&gt;对于最初设计的Inception模块，虽然5x5的卷积核较少，但当网络达到一定规模后，仍然会产生巨大的计算量。为了解决这个问题，作者引入1x1的卷积核进行降维。对Inception v1的改进如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet03.png&#34; alt=&#34;inception module b&#34;&gt;&lt;/p&gt;
+&lt;p&gt;改动后的结构有两个优点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过降维，可以减少模型参数量；&lt;/li&gt;
+&lt;li&gt;新增1x1卷积后可以带来更多的非线性变换，提高模型表达能力。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;googlenet&#34;&gt;GoogLeNet&lt;/h3&gt;
+&lt;p&gt;GoogLeNet的网络细节如下表所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet02.png&#34; alt=&#34;GoogLeNet incarnation of the Inception architecture&#34;&gt;&lt;/p&gt;
+&lt;p&gt;网络的一些特点如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;网络采用了模块化的结构，使用Inception mudule，便于修改网络结构。&lt;/li&gt;
+&lt;li&gt;包括Inception在内的所有卷积都使用修正线性激活（ReLU）。&lt;/li&gt;
+&lt;li&gt;网络使用average pooling代替了全连接层，但仍需要保留dropout。&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;梯度回传&lt;/strong&gt;：为了避免梯度消失，网络中额外增加了2个辅助分类器（softmax）用于向前传播梯度。（辅助分类器只在训练时使用）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;conclusions&#34;&gt;Conclusions&lt;/h3&gt;
+&lt;p&gt;将最佳稀疏结构稠密化是提高计算机视觉神经网络的有效方法。相比于浅且窄的网络，这种方法的优点在于只需适度增加计算量，性能就显著提升。&lt;/p&gt;
+&lt;h2 id=&#34;part-2--inception系列&#34;&gt;Part 2 : Inception系列&lt;/h2&gt;
+&lt;p&gt;论文：&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/1512.00567.pdf&#34;&gt;Rethinking the Inception Architecture for Computer Vision&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://arxiv.org/pdf/1602.07261.pdf&#34;&gt;Inception-v4, Inception-ResNet and the Impact of Residual Connections on Learning&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;inception-v2&#34;&gt;Inception V2&lt;/h3&gt;
+&lt;h4 id=&#34;4条设计原则&#34;&gt;4条设计原则&lt;/h4&gt;
+&lt;p&gt;文章提出了4条设计原则，并依据这4条原则对Inception进行改进：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;网络浅层慎用bottleneck&lt;/li&gt;
+&lt;li&gt;高维特征更适合在网络局部处理&lt;/li&gt;
+&lt;li&gt;网络聚合可以通过低维嵌入&lt;/li&gt;
+&lt;li&gt;平衡网络的深度和宽度&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;inception-v2-结构&#34;&gt;Inception V2 结构&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet04.png&#34; alt=&#34;Inception v2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;Inception v2相对于v1做的改进是使用多个小卷积核代替一个大卷积核（如使用2个3x3的卷积代替原来的1个5x5卷积），这样可以有效减少模型的参数量，增加模型的深度。&lt;/p&gt;
+&lt;p&gt;此外，Inception v2还引入了BN，加速网络训练，解决梯度消失。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet05.png&#34; alt=&#34;Inception v2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;在此基础上，作者提出可以使用多个非对称的小尺寸卷积核堆叠，代替一个大卷积核（比如用1xn和nx1代替nxn）。需要注意的是，这种结构在前几层的效果并不好，当特征图的尺寸在12到20之间时使用的效果会更好一些。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet06.png&#34; alt=&#34;Inception v2&#34;&gt;&lt;/p&gt;
+&lt;p&gt;结合对称卷积和非对称卷积，增加网络宽度。&lt;/p&gt;
+&lt;h3 id=&#34;inception-v3&#34;&gt;Inception V3&lt;/h3&gt;
+&lt;p&gt;Inception v3中作者将7x7卷积分解成了3个3x3卷积，v3中使用的Aug loss里使用了BN进行regularization。&lt;/p&gt;
+&lt;h4 id=&#34;降低特征图大小&#34;&gt;降低特征图大小&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet07.png&#34; alt=&#34;传统下采样&#34;&gt;&lt;/p&gt;
+&lt;p&gt;传统的两种下采样方式如上图所示，要么先pooling再Inception（这种方法的缺点是池化会造成信息的丢失），要么先Inception再Pooling（这种方法的缺点是计算量增大）。故两种方法都不可取。作者提出了一种新的降低特征图大小的方法，如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet08.png&#34; alt=&#34;inception下采样&#34;&gt;&lt;/p&gt;
+&lt;p&gt;让池化和卷积并行执行（stride=2），最后再将特征图进行组合。&lt;/p&gt;
+&lt;h3 id=&#34;inception-v4&#34;&gt;Inception V4&lt;/h3&gt;
+&lt;h4 id=&#34;整体网络结构&#34;&gt;整体网络结构&lt;/h4&gt;
+&lt;p&gt;相比于v2/v3，Inception v4的网络结构更加简介同意，并使用了更多的Inception模块。下图为Inception v4的网络结构。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet09.png&#34; alt=&#34;inception v4整体网络结构&#34;&gt;&lt;/p&gt;
+&lt;p&gt;下图为Inception v4的stem模块。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/GoogLeNet10.png&#34; alt=&#34;inception v4 stem module&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;inception-resnet&#34;&gt;Inception ResNet&lt;/h3&gt;
+&lt;p&gt;Inception ResNet将Inception模块与残差连接思想结合，该系列有Inception-ResNet-v1和Inception-ResNet-v2，经验证，残差连接能够显著加速Inception的训练。&lt;/p&gt;</description>
+      
+    </item>
     
     <item>
       <title>VGG</title>
