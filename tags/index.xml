@@ -6,13 +6,22 @@
     <description>Recent content in Tags on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 01 Sep 2022 10:57:09 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Sep 2022 23:19:50 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>CNN</title>
       <link>https://JuneCly.github.io/tags/cnn/</link>
-      <pubDate>Thu, 01 Sep 2022 10:57:09 +0800</pubDate>
+      <pubDate>Sun, 11 Sep 2022 23:19:50 +0800</pubDate>
       
       <guid>https://JuneCly.github.io/tags/cnn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>ResNet</title>
+      <link>https://JuneCly.github.io/tags/resnet/</link>
+      <pubDate>Sun, 11 Sep 2022 23:19:50 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/tags/resnet/</guid>
       <description></description>
     </item>
     

@@ -3,28 +3,63 @@
   
   <url>
     <loc>https://JuneCly.github.io/categories/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/tags/cnn/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/categories/cv/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/categories/paper/</loc>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/post/</loc>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/tags/resnet/</loc>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/post/resnet/</loc>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/tags/</loc>
+    <lastmod>2022-09-11T23:19:50+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
@@ -38,27 +73,6 @@
   
   <url>
     <loc>https://JuneCly.github.io/post/googlenet/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/categories/paper/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/post/</loc>
-    <lastmod>2022-09-01T10:57:09+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/tags/</loc>
     <lastmod>2022-09-01T10:57:09+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>

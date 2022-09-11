@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Thu, 01 Sep 2022 10:57:09 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 11 Sep 2022 23:19:50 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ResNet</title>
+      <link>https://JuneCly.github.io/post/resnet/</link>
+      <pubDate>Sun, 11 Sep 2022 23:19:50 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/resnet/</guid>
+      <description>&lt;p&gt;ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>GoogLeNet</title>
       <link>https://JuneCly.github.io/post/googlenet/</link>
