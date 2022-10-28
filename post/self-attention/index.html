@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Self Attention - Chen LY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Chen LY" />
+  <meta name="description" content="对于Transformer中Self-attention机制的理解
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.1" />
+
+
+<link rel="canonical" href="https://JuneCly.github.io/post/self-attention/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa4b2b9f31b5c6d0b683db81157a9226e17b06e61911791ab547242a4a0556f2.css" integrity="sha256-&#43;ksrnzG1xtC2g9uBFXqSJuF7BuYZEXkatUckKkoFVvI=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Self Attention" />
+<meta property="og:description" content="对于Transformer中Self-attention机制的理解" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JuneCly.github.io/post/self-attention/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-10-28T23:56:33+08:00" />
+<meta property="article:modified_time" content="2022-10-28T23:56:33+08:00" />
+
+<meta itemprop="name" content="Self Attention">
+<meta itemprop="description" content="对于Transformer中Self-attention机制的理解"><meta itemprop="datePublished" content="2022-10-28T23:56:33+08:00" />
+<meta itemprop="dateModified" content="2022-10-28T23:56:33+08:00" />
+<meta itemprop="wordCount" content="2077">
+<meta itemprop="keywords" content="Self-attention,tansformer," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Self Attention"/>
+<meta name="twitter:description" content="对于Transformer中Self-attention机制的理解"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Chen LY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Chen LY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Self Attention</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-10-28" class="post-time">
+          2022-10-28
+        </time>
+        <div class="post-category">
+            <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#attention-mechanism">Attention Mechanism</a>
+      <ul>
+        <li><a href="#attention机制理解">attention机制理解</a></li>
+        <li><a href="#attention分类">attention分类</a></li>
+      </ul>
+    </li>
+    <li><a href="#self-attention">Self-Attention</a>
+      <ul>
+        <li><a href="#self-attention的挑战与目标">Self-Attention的挑战与目标</a></li>
+        <li><a href="#self-attention的计算过程概述">Self-Attention的计算过程概述</a></li>
+        <li><a href="#attention核心公式的理解">Attention核心公式的理解</a></li>
+        <li><a href="#自注意力机制与cnnrnn对比">自注意力机制与CNN、RNN对比</a></li>
+        <li><a href="#存在的问题">存在的问题</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>对于Transformer中Self-attention机制的理解</p>
+<h2 id="attention-mechanism">Attention Mechanism</h2>
+<h3 id="attention机制理解">attention机制理解</h3>
+<p>将人的感知方式，注意力的行为应用在机器上，让机器学会感知数据中重要的和不重要的部分。</p>
+<h3 id="attention分类">attention分类</h3>
+<ul>
+<li>
+<p><strong>Soft/Global Attention（软注意/全局注意）</strong></p>
+<p>对每个输入项分配的权重在0-1之间，也就是某些部分关注的多一点，某些部分关注的少一点，因为对大部分信息都关注，但关注程度不同。所以计算量相对来说较大</p>
+</li>
+<li>
+<p><strong>Hard/Local Attention （硬注意/局部注意）</strong></p>
+<p>对每个输入项分配的权重非0即1，只关注需要的部分，舍弃掉无关的部分。好处是可以减少一定的时间和计算成本，缺点是有可能丢失信息。</p>
+</li>
+<li>
+<p><strong>Self/Intra Attention （自注意力机制/内注意）</strong></p>
+<p>对每个输入项分配的权重取决于输入项之间的相互作用，即通过输入项内部的“表决”来决定应该关注哪些输入项。与前两者相比，自注意力机制在处理很长的输入时，具有并行计算的优势。</p>
+</li>
+</ul>
+<h2 id="self-attention">Self-Attention</h2>
+<h3 id="self-attention的挑战与目标">Self-Attention的挑战与目标</h3>
+<blockquote>
+<p><em>The animal didn’t cross the street because it was too tired</em></p>
+<p><em>The animal didn’t cross the street because it was too wide</em></p>
+</blockquote>
+<p>两个句子中的it指代的对象并不一样，但是这对于机器来说很难判断。</p>
+<p>self-attention机制通过计算单词it与其他词之间的联系得知it的具体指代。</p>
+<h3 id="self-attention的计算过程概述">Self-Attention的计算过程概述</h3>
+<p>对于一系列输入向量a，经过self-attention 后得到一系列向量b，输出的每个token是考虑了输入的所有token后得到的。所以4个向量token对应4个向量的token</p>
+<ol>
+<li>对于每个向量a，分别乘上三个矩阵系数W得到三个值：Q, K, V，分别表示query, key, value</li>
+<li>利用得到的Q和K计算每两个输入向量之间的相关性，也就是计算attention的a，常用点乘方法计算。A= K·Q，矩阵A中的每一个值记录了对应的两个输入向量的Attention大小</li>
+<li>对A矩阵进行softmax或者Relu得到A'</li>
+<li>利用得到的A&rsquo;和V计算得到每个输入向量a对应的self-attention层的输出向量b</li>
+</ol>
+<h3 id="attention核心公式的理解">Attention核心公式的理解</h3>
+<p>$$
+Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
+$$</p>
+<h4 id="1对公式计算步骤的理解">1、对公式计算步骤的理解</h4>
+<p>抛开Q，K，V三个矩阵，self-attention的最原始形态的公式如下：
+$$
+Softmax(XX^T)X
+$$
+其中
+$$
+XX^T代表什么
+$$
+一个矩阵是由一些向量组成的，当一个矩阵乘以自己的转置矩阵时，（将矩阵中的向量以多个行向量组成的方式表示）可以看作这些向量分别与其他向量计算内积。</p>
+<p>而向量内积的几何意义是：表征两个向量的家教，即表征一个向量在另一个向量上的投影。投影的值越大，说明两个向量的相关度越高。</p>
+<p>如果两个向量的夹角是90°，那么这两个向量线性无关，完全没有相关性。</p>
+<p>将词向量代入其中进行理解，若两个词向量计算内积得到的投影的值越大，可以理解为两个词向量的相关性就越高。</p>
+<p>接下来，进一步理解
+$$
+Softmax(XX^T)中softmax的意义
+$$
+softmax的意义是进行归一化。而Attention 机制的核心是正是<strong>加权求和</strong>。</p>
+<p>接下来我们再看这个公式
+$$
+Softmax(XX^T)X
+$$
+我们取经过内积与softmax运算后的一个行向量举例，将其与X的一个列向量相乘，新得到的向量与原来X的向量维度相同。</p>
+<p>在新的向量中，每一个维度的数值都是由三个词向量在这一维度的数值加权求和得到的，这个新的行向量就是原来的“早”字向量经过注意力机制加权求和之后的表示。</p>
+<h4 id="2对qkv矩阵的理解">2、对Q、K、V矩阵的理解</h4>
+<p>Q、K、V矩阵都是矩阵X与权重矩阵W的乘积得到的，即他们<strong>本质上都是X的线性变换</strong>。</p>
+<p>为什么不直接用矩阵X进行计算呢？是为了提升模型的拟合能力。因为矩阵W是可以训练的，可以起到一个缓冲的作用。</p>
+<h4 id="3对根号d_k的理解">3、对根号d_k的理解</h4>
+<p>$$
+\sqrt{d_k}
+$$</p>
+<p>假设Q，K里的元素均值为0，方差为1，那么
+$$
+A^T = Q^TK
+$$
+中的元素的均值为0，方差为d.</p>
+<p>当d很大时，A中的元素的方差也很大，此时Softmax(A)的分布会趋于陡峭。</p>
+<p>也就是说Softmax(A)的分布和d有关，因此A中的内一个元素除以根号d_k后，方差又变为1.这使得Softmax(A)的分布陡峭程度与d解耦，从而使训练过程中梯度值保持稳定。</p>
+<h3 id="自注意力机制与cnnrnn对比">自注意力机制与CNN、RNN对比</h3>
+<p><strong>自注意力机制与CNN对比</strong></p>
+<p>在处理图像问题时，每一个像素点可以看作一个三维的向量，维度就是图像的通道数。所以图像也可以看作很多的向量输入到模型中。两者思想类似，都是希望网络能够不仅仅考虑某一个向量，而是考虑全局。对于CNN来说，矩形的感受野就是模型需要考虑的部分，但是self-attention是让模型自己决定有要考虑哪部分。</p>
+<p>CNN可以看作一种特殊的self-attention，self-attention可以看作一种复杂的CNN。</p>
+<p><strong>自注意力机制与RNN对比</strong></p>
+<p>RNN和自注意力机制类似，都是接受一批输入向量，然后输出一批向量，但RNN只能接受前面的的输出作为输入，而self-attention可以同时关注到全部的向量。</p>
+<h3 id="存在的问题">存在的问题</h3>
+<p>虽然考虑了所有的输入向量，但没有考虑到向量的位置信息。在处理实际问题的过程中，同一个词在不同的位置可能有不同的含义。</p>
+<p>对此的改进方法是：<strong>位置编码</strong> positional encoding</p>
+<p>对每一个输入向量加上一个位置向量e，通过e来表示位置信息，并带入self-attention层进行计算。</p>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://JuneCly.github.io/tags/self-attention/">Self-attention</a>
+          <a href="https://JuneCly.github.io/tags/tansformer/">tansformer</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/senet/">
+            <span class="next-text nav-default">SENet</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://JuneCly.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        chen LY
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.dee43230127a73d039a734510fa896c89c3c7ce0cf0be0c7a7433f8fd69b76dc.js" integrity="sha256-3uQyMBJ6c9A5pzRRD6iWyJw8fODPC&#43;DHp0M/j9abdtw=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

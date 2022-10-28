@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SENet on Chen LY</title>
+    <link>https://JuneCly.github.io/tags/senet/</link>
+    <description>Recent content in SENet on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 28 Oct 2022 23:52:36 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/senet/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>SENet</title>
+      <link>https://JuneCly.github.io/post/senet/</link>
+      <pubDate>Fri, 28 Oct 2022 23:52:36 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/senet/</guid>
+      <description>&lt;p&gt;Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

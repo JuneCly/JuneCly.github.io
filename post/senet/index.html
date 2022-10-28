@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>ResNet - Chen LY</title>
+  <title>SENet - Chen LY</title>
   
 
 <meta name="renderer" content="webkit" />
@@ -23,7 +23,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 
 <meta name="author" content="Chen LY" />
-  <meta name="description" content="ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。
+  <meta name="description" content="Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。
 " />
 
   <meta name="keywords" content="Hugo, theme, jane" />
@@ -36,7 +36,7 @@
 <meta name="generator" content="Hugo 0.97.1" />
 
 
-<link rel="canonical" href="https://JuneCly.github.io/post/resnet/" />
+<link rel="canonical" href="https://JuneCly.github.io/post/senet/" />
 
 
 
@@ -60,20 +60,20 @@
 
 
 
-<meta property="og:title" content="ResNet" />
-<meta property="og:description" content="ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。" />
+<meta property="og:title" content="SENet" />
+<meta property="og:description" content="Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://JuneCly.github.io/post/resnet/" /><meta property="article:section" content="post" />
-<meta property="article:published_time" content="2022-09-11T23:19:50+08:00" />
-<meta property="article:modified_time" content="2022-09-11T23:19:50+08:00" />
+<meta property="og:url" content="https://JuneCly.github.io/post/senet/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-10-28T23:52:36+08:00" />
+<meta property="article:modified_time" content="2022-10-28T23:52:36+08:00" />
 
-<meta itemprop="name" content="ResNet">
-<meta itemprop="description" content="ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。"><meta itemprop="datePublished" content="2022-09-11T23:19:50+08:00" />
-<meta itemprop="dateModified" content="2022-09-11T23:19:50+08:00" />
-<meta itemprop="wordCount" content="1579">
-<meta itemprop="keywords" content="ResNet,CNN," /><meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="ResNet"/>
-<meta name="twitter:description" content="ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。"/>
+<meta itemprop="name" content="SENet">
+<meta itemprop="description" content="Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。"><meta itemprop="datePublished" content="2022-10-28T23:52:36+08:00" />
+<meta itemprop="dateModified" content="2022-10-28T23:52:36+08:00" />
+<meta itemprop="wordCount" content="776">
+<meta itemprop="keywords" content="SENet,CNN," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SENet"/>
+<meta name="twitter:description" content="Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。"/>
 
 <!--[if lte IE 9]>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
@@ -217,11 +217,11 @@
           <article class="post bg-white">
     
     <header class="post-header">
-      <h1 class="post-title">ResNet</h1>
+      <h1 class="post-title">SENet</h1>
       
       <div class="post-meta">
-        <time datetime="2022-09-11" class="post-time">
-          2022-09-11
+        <time datetime="2022-10-28" class="post-time">
+          2022-10-28
         </time>
         <div class="post-category">
             <a href="https://JuneCly.github.io/categories/cv/"> cv </a>
@@ -245,14 +245,14 @@
   <div class="post-toc-content">
     <nav id="TableOfContents">
   <ul>
-    <li><a href="#part---resnet">Part Ⅰ : ResNet</a>
+    <li><a href="#senet网络结构">SENet网络结构</a>
       <ul>
-        <li><a href="#introduction">Introduction</a></li>
-        <li><a href="#deep-residual-learning">Deep Residual Learning</a></li>
-        <li><a href="#network-architectures">Network Architectures</a></li>
+        <li><a href="#sequeeze-操作">Sequeeze 操作</a></li>
+        <li><a href="#excitation-操作">Excitation 操作</a></li>
       </ul>
     </li>
-    <li><a href="#part---resnet-v2">Part Ⅱ : ResNet V2</a></li>
+    <li><a href="#senet的应用">SENet的应用</a></li>
+    <li><a href="#实验结果">实验结果</a></li>
   </ul>
 </nav>
   </div>
@@ -260,40 +260,25 @@
 
     
     <div class="post-content">
-      <p>ResNet获得了2015年ILSVER比赛中图像分类第一名，目标检测第一名。获得COCO数据集比赛中目标检测第一名，图像分割第一名。该网络亮点在于引入残差模块来缓解随着网络深度的增加而出现的网络退化问题。</p>
-<p>论文：</p>
-<p>ResNet：<a href="https://arxiv.org/pdf/1512.03385.pdf">Deep Residual Learning for Image Recognition</a></p>
-<p>ResNet V2：<a href="https://arxiv.org/pdf/1603.05027.pdf">Identity Mappings in Deep Residual Networks</a></p>
-<h2 id="part---resnet">Part Ⅰ : ResNet</h2>
-<h3 id="introduction">Introduction</h3>
-<p>在ResNet出现之前，人们已经认同神经网络深度的增加可以提高模型的准确率这一观点。但在实际训练网络的过程中，常会出现这样的现象：模型的准确率随网络的深度增加上升到一定程度之后，准确率反而随网络的深度增加而下降。</p>
-<p><img src="/image/ResNet/ResNet01.png" alt="图1：网络退化现象"></p>
-<p>造成这样现象的原因有两个：<strong>梯度爆炸/梯度消失问题</strong>和<strong>网络退化问题</strong>。</p>
-<h4 id="梯度爆炸梯度消失">梯度爆炸/梯度消失</h4>
-<p>根据反向传播算法中的链式法则，如果层层之间的梯度均在（0，1）之间，层层缩小，那么就会出现<strong>梯度消失</strong>。反之，如果层层传递的梯度大于1，那么经过层层扩大，就会出现<strong>梯度爆炸</strong>。</p>
-<p>要解决因网络深度增加而出现的梯度爆炸/梯度消失问题，可以使用<strong>BN</strong>（Batch Normalization）来解决。</p>
-<h4 id="网络退化">网络退化</h4>
-<p>网络退化是指当神经网络越来越深的时候，反传回来的梯度之间的<strong>相关性会越来越差</strong>，最后接近白噪声。为了缓解网络退化问题，作者引入了残差学习的思想。</p>
-<h3 id="deep-residual-learning">Deep Residual Learning</h3>
-<blockquote>
-<p>”若某一较深的网络多出另一较浅网络的若干层有能力学习到恒等映射,那么这一较深网络训练得到的模型性能一定不会弱于该浅层网络。”</p>
-</blockquote>
-<p>作者认为，如果能够通过某种方法，使得较深层的网络能够恒等映射浅层网络，那么其模型性能一定不会差于该浅层网络。这就是参差模块的核心思想：通过增加一条短路连接（shortcut connection）来实现网络的恒等映射（identity mapping）。</p>
-<p><img src="/image/ResNet/ResNet02.png" alt="图2：残差模块"></p>
-<p>上图就是作者提出的参差模块：输入x经过两个卷积层后得到的结果F(x)，与经过shortcut connection的x相加后，再进行ReLU运算。</p>
-<p>对于一个堆积层结构（几层堆叠而成），当输入为x时其学习到的特征记为H(x)，现在我们希望其可以学习到残差 F(x)=H(x)−x ，这样原始的学习特征则是 F(x)+x 。对于神经网络来说，学习F(x)=0要比学习H(x)=x简单得多。因为对于前者而言，我们只需在学习F(x)=0时让其参数为0即可。</p>
-<h3 id="network-architectures">Network Architectures</h3>
-<p><img src="/image/ResNet/ResNet03.png" alt="图3：ResNet34网络架构及对比"></p>
-<p>上图是ResNet34的网络结构，可以看出与同为34层的plain network相比，ResNet增加了许多shortcut connection。ResNet34根据颜色被分为5个模块（分别对应下表中展示的5个网络层）。</p>
-<p>需要注意的是，在第3、4、5模块（图中标注为绿色、红色、蓝色的部分）的起始位置的shortcut connection被标注为虚线。这是因为在这些地方，图像在经过residual模块时需要进行下采样操作。具体实现方法为：在residual分支中通过3x3conv, stride=2实现图像下采样；在shortcut分支中，此时的输入x则需要经过一个1x1conv的卷积来实现下采样。这样两个分支汇合时才能进行add操作。</p>
-<p><img src="/image/ResNet/ResNet04.png" alt="图4：ResNet网络架构表格"></p>
-<p>上表是作者给出的不同层数的ResNet的具体网络结构。虽然不同网络的具体层数不同，但是总体的结构是一致的，即均是由5个卷积模块堆叠后接一个avg pool，然后fc 1000输出分类结果。</p>
-<p>在上表中，ResNet-50，ResNet-101和ResNet-152使用了一种名为瓶颈(bottleneck)的残差模块。我们下面将对这种结构进行进一步介绍。</p>
-<h4 id="bottleneck">bottleneck</h4>
-<p><img src="/image/ResNet/ResNet05.png" alt="图5：bottleneck结构"></p>
-<p>上图中左边展示的是原本的参差模块结构，右边则是bottleneck结构。可以看出，bottleneck中，卷积层由两个3x3的卷积变为了1x1, 3x3, 1x1的三层卷积层。其中，前后两个1x1conv的作用是分别对图像进行降维，升维的操作。对于网络层数较多的ResNet-50/101/152来说，这种做法可以有效地减少参数量计算量。</p>
-<h2 id="part---resnet-v2">Part Ⅱ : ResNet V2</h2>
-<p>未完待续。。。</p>
+      <p>Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。</p>
+<h2 id="senet网络结构">SENet网络结构</h2>
+<p><img src="/image/SENetPic/SENet-Image1.png" alt="SENet网络结构"></p>
+<p>如上图所示，是SENet Block结构。SENet的创新之处在于先对U进行一个全剧平均池化，再将得到的1x1xC数据经过两次全连接，最后用sigmoid函数将其控制在[0,1]，把得到的值作为scale乘到U的C个Channel上，作为下一级的输入数据。</p>
+<p>网络的SE操作目的是通过scale的值来将不同channel中的重要的特征进行增强，同时将不重要的特征进行减弱。</p>
+<h3 id="sequeeze-操作">Sequeeze 操作</h3>
+<p>对于Global Average Pooling，论文中作者使用了求平均的方法，将空间上所有点的信息都平均成了一个值。这是因为最终要得到的Scale值是要作用于整个通道，这就需要根据通道的整体信息来计算scale。具体计算公式如下：
+$$
+z_c = F_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^{W} \sum_{j=1}^{H} u_c(i, j)
+$$</p>
+<h3 id="excitation-操作">Excitation 操作</h3>
+<p>作者通过两个全连接来实现Excitation，第一个全连接把C个通道压缩成了C/r个通道来降低计算量，第二个全连接层再恢复至C个通道。其中， r指代压缩的比例，文中选用的r=16。此时网络的整体性能和计算量最平衡。</p>
+<h2 id="senet的应用">SENet的应用</h2>
+<p><img src="/image/SENetPic/SENet-Image2.png" alt="SENet实际应用"></p>
+<p>上图是SENet在实际应用中与其他网络结合的例子。左图展示的是SE-Inception结构；右图展示的是SE-ResNet结构，需要注意的是，SE的scale部分放在了ResNet的add结构之前。下表是SE-ResNet的具体的网络结构。</p>
+<p><img src="/image/SENetPic/SENet-Image3.png" alt="SENet具体网络结构"></p>
+<h2 id="实验结果">实验结果</h2>
+<p><img src="/image/SENetPic/SENet-Image4.png" alt="实验结果对比"></p>
+<p>作者使用ImageNet数据集，分别对不同深度，不同类型的SENet结构和非SENet结构进行测试，上图是实验结果。从表中可以看出，在计算复杂度只有微小提高的情况下，SENet结构要比非SENet结构的效果更好。</p>
     </div>
 
     
@@ -305,7 +290,7 @@
 
     <footer class="post-footer">
       <div class="post-tags">
-          <a href="https://JuneCly.github.io/tags/resnet/">ResNet</a>
+          <a href="https://JuneCly.github.io/tags/senet/">SENet</a>
           <a href="https://JuneCly.github.io/tags/cnn/">CNN</a>
           
         </div>
@@ -313,7 +298,7 @@
       
       <nav class="post-nav">
         
-          <a class="prev" href="/post/densenet/">
+          <a class="prev" href="/post/self-attention/">
             
             <i class="iconfont">
               <svg  class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -323,12 +308,12 @@
 </svg>
 
             </i>
-            <span class="prev-text nav-default">DenseNet</span>
+            <span class="prev-text nav-default">Self Attention</span>
             <span class="prev-text nav-mobile">Prev</span>
           </a>
         
-          <a class="next" href="/post/googlenet/">
-            <span class="next-text nav-default">GoogLeNet</span>
+          <a class="next" href="/post/densenet/">
+            <span class="next-text nav-default">DenseNet</span>
             <span class="prev-text nav-mobile">Next</span>
             
             <i class="iconfont">

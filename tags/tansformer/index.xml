@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tansformer on Chen LY</title>
+    <link>https://JuneCly.github.io/tags/tansformer/</link>
+    <description>Recent content in tansformer on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Fri, 28 Oct 2022 23:56:33 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/tags/tansformer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Self Attention</title>
+      <link>https://JuneCly.github.io/post/self-attention/</link>
+      <pubDate>Fri, 28 Oct 2022 23:56:33 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/self-attention/</guid>
+      <description>&lt;p&gt;对于Transformer中Self-attention机制的理解&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

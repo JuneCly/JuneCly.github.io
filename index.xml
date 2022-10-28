@@ -6,10 +6,199 @@
     <description>Recent content on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 11 Sep 2022 23:19:50 +0800</lastBuildDate>
+    <lastBuildDate>Fri, 28 Oct 2022 23:56:33 +0800</lastBuildDate>
     
         <atom:link href="https://JuneCly.github.io/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Self Attention</title>
+      <link>https://JuneCly.github.io/post/self-attention/</link>
+      <pubDate>Fri, 28 Oct 2022 23:56:33 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/self-attention/</guid>
+      
+        <description>&lt;p&gt;对于Transformer中Self-attention机制的理解&lt;/p&gt;
+&lt;h2 id=&#34;attention-mechanism&#34;&gt;Attention Mechanism&lt;/h2&gt;
+&lt;h3 id=&#34;attention机制理解&#34;&gt;attention机制理解&lt;/h3&gt;
+&lt;p&gt;将人的感知方式，注意力的行为应用在机器上，让机器学会感知数据中重要的和不重要的部分。&lt;/p&gt;
+&lt;h3 id=&#34;attention分类&#34;&gt;attention分类&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Soft/Global Attention（软注意/全局注意）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对每个输入项分配的权重在0-1之间，也就是某些部分关注的多一点，某些部分关注的少一点，因为对大部分信息都关注，但关注程度不同。所以计算量相对来说较大&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Hard/Local Attention （硬注意/局部注意）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对每个输入项分配的权重非0即1，只关注需要的部分，舍弃掉无关的部分。好处是可以减少一定的时间和计算成本，缺点是有可能丢失信息。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Self/Intra Attention （自注意力机制/内注意）&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;对每个输入项分配的权重取决于输入项之间的相互作用，即通过输入项内部的“表决”来决定应该关注哪些输入项。与前两者相比，自注意力机制在处理很长的输入时，具有并行计算的优势。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;self-attention&#34;&gt;Self-Attention&lt;/h2&gt;
+&lt;h3 id=&#34;self-attention的挑战与目标&#34;&gt;Self-Attention的挑战与目标&lt;/h3&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;The animal didn’t cross the street because it was too tired&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;The animal didn’t cross the street because it was too wide&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;两个句子中的it指代的对象并不一样，但是这对于机器来说很难判断。&lt;/p&gt;
+&lt;p&gt;self-attention机制通过计算单词it与其他词之间的联系得知it的具体指代。&lt;/p&gt;
+&lt;h3 id=&#34;self-attention的计算过程概述&#34;&gt;Self-Attention的计算过程概述&lt;/h3&gt;
+&lt;p&gt;对于一系列输入向量a，经过self-attention 后得到一系列向量b，输出的每个token是考虑了输入的所有token后得到的。所以4个向量token对应4个向量的token&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;对于每个向量a，分别乘上三个矩阵系数W得到三个值：Q, K, V，分别表示query, key, value&lt;/li&gt;
+&lt;li&gt;利用得到的Q和K计算每两个输入向量之间的相关性，也就是计算attention的a，常用点乘方法计算。A= K·Q，矩阵A中的每一个值记录了对应的两个输入向量的Attention大小&lt;/li&gt;
+&lt;li&gt;对A矩阵进行softmax或者Relu得到A&#39;&lt;/li&gt;
+&lt;li&gt;利用得到的A&amp;rsquo;和V计算得到每个输入向量a对应的self-attention层的输出向量b&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;attention核心公式的理解&#34;&gt;Attention核心公式的理解&lt;/h3&gt;
+&lt;p&gt;$$
+Attention(Q,K,V) = softmax(\frac{QK^T}{\sqrt{d_k}})V
+$$&lt;/p&gt;
+&lt;h4 id=&#34;1对公式计算步骤的理解&#34;&gt;1、对公式计算步骤的理解&lt;/h4&gt;
+&lt;p&gt;抛开Q，K，V三个矩阵，self-attention的最原始形态的公式如下：
+$$
+Softmax(XX^T)X
+$$
+其中
+$$
+XX^T代表什么
+$$
+一个矩阵是由一些向量组成的，当一个矩阵乘以自己的转置矩阵时，（将矩阵中的向量以多个行向量组成的方式表示）可以看作这些向量分别与其他向量计算内积。&lt;/p&gt;
+&lt;p&gt;而向量内积的几何意义是：表征两个向量的家教，即表征一个向量在另一个向量上的投影。投影的值越大，说明两个向量的相关度越高。&lt;/p&gt;
+&lt;p&gt;如果两个向量的夹角是90°，那么这两个向量线性无关，完全没有相关性。&lt;/p&gt;
+&lt;p&gt;将词向量代入其中进行理解，若两个词向量计算内积得到的投影的值越大，可以理解为两个词向量的相关性就越高。&lt;/p&gt;
+&lt;p&gt;接下来，进一步理解
+$$
+Softmax(XX^T)中softmax的意义
+$$
+softmax的意义是进行归一化。而Attention 机制的核心是正是&lt;strong&gt;加权求和&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;接下来我们再看这个公式
+$$
+Softmax(XX^T)X
+$$
+我们取经过内积与softmax运算后的一个行向量举例，将其与X的一个列向量相乘，新得到的向量与原来X的向量维度相同。&lt;/p&gt;
+&lt;p&gt;在新的向量中，每一个维度的数值都是由三个词向量在这一维度的数值加权求和得到的，这个新的行向量就是原来的“早”字向量经过注意力机制加权求和之后的表示。&lt;/p&gt;
+&lt;h4 id=&#34;2对qkv矩阵的理解&#34;&gt;2、对Q、K、V矩阵的理解&lt;/h4&gt;
+&lt;p&gt;Q、K、V矩阵都是矩阵X与权重矩阵W的乘积得到的，即他们&lt;strong&gt;本质上都是X的线性变换&lt;/strong&gt;。&lt;/p&gt;
+&lt;p&gt;为什么不直接用矩阵X进行计算呢？是为了提升模型的拟合能力。因为矩阵W是可以训练的，可以起到一个缓冲的作用。&lt;/p&gt;
+&lt;h4 id=&#34;3对根号d_k的理解&#34;&gt;3、对根号d_k的理解&lt;/h4&gt;
+&lt;p&gt;$$
+\sqrt{d_k}
+$$&lt;/p&gt;
+&lt;p&gt;假设Q，K里的元素均值为0，方差为1，那么
+$$
+A^T = Q^TK
+$$
+中的元素的均值为0，方差为d.&lt;/p&gt;
+&lt;p&gt;当d很大时，A中的元素的方差也很大，此时Softmax(A)的分布会趋于陡峭。&lt;/p&gt;
+&lt;p&gt;也就是说Softmax(A)的分布和d有关，因此A中的内一个元素除以根号d_k后，方差又变为1.这使得Softmax(A)的分布陡峭程度与d解耦，从而使训练过程中梯度值保持稳定。&lt;/p&gt;
+&lt;h3 id=&#34;自注意力机制与cnnrnn对比&#34;&gt;自注意力机制与CNN、RNN对比&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;自注意力机制与CNN对比&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;在处理图像问题时，每一个像素点可以看作一个三维的向量，维度就是图像的通道数。所以图像也可以看作很多的向量输入到模型中。两者思想类似，都是希望网络能够不仅仅考虑某一个向量，而是考虑全局。对于CNN来说，矩形的感受野就是模型需要考虑的部分，但是self-attention是让模型自己决定有要考虑哪部分。&lt;/p&gt;
+&lt;p&gt;CNN可以看作一种特殊的self-attention，self-attention可以看作一种复杂的CNN。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;自注意力机制与RNN对比&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;RNN和自注意力机制类似，都是接受一批输入向量，然后输出一批向量，但RNN只能接受前面的的输出作为输入，而self-attention可以同时关注到全部的向量。&lt;/p&gt;
+&lt;h3 id=&#34;存在的问题&#34;&gt;存在的问题&lt;/h3&gt;
+&lt;p&gt;虽然考虑了所有的输入向量，但没有考虑到向量的位置信息。在处理实际问题的过程中，同一个词在不同的位置可能有不同的含义。&lt;/p&gt;
+&lt;p&gt;对此的改进方法是：&lt;strong&gt;位置编码&lt;/strong&gt; positional encoding&lt;/p&gt;
+&lt;p&gt;对每一个输入向量加上一个位置向量e，通过e来表示位置信息，并带入self-attention层进行计算。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>SENet</title>
+      <link>https://JuneCly.github.io/post/senet/</link>
+      <pubDate>Fri, 28 Oct 2022 23:52:36 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/senet/</guid>
+      
+        <description>&lt;p&gt;Sequeeze-and-Excitation Networks, 简称SENet.获得了ImageNet最后一届竞赛图像分类任务的冠军。SENet通过Sequeeze和Excitation两个操作，让网络关注到channel之间的关系，希望模型可以自动学习到不同channel的重要特征。&lt;/p&gt;
+&lt;h2 id=&#34;senet网络结构&#34;&gt;SENet网络结构&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/SENetPic/SENet-Image1.png&#34; alt=&#34;SENet网络结构&#34;&gt;&lt;/p&gt;
+&lt;p&gt;如上图所示，是SENet Block结构。SENet的创新之处在于先对U进行一个全剧平均池化，再将得到的1x1xC数据经过两次全连接，最后用sigmoid函数将其控制在[0,1]，把得到的值作为scale乘到U的C个Channel上，作为下一级的输入数据。&lt;/p&gt;
+&lt;p&gt;网络的SE操作目的是通过scale的值来将不同channel中的重要的特征进行增强，同时将不重要的特征进行减弱。&lt;/p&gt;
+&lt;h3 id=&#34;sequeeze-操作&#34;&gt;Sequeeze 操作&lt;/h3&gt;
+&lt;p&gt;对于Global Average Pooling，论文中作者使用了求平均的方法，将空间上所有点的信息都平均成了一个值。这是因为最终要得到的Scale值是要作用于整个通道，这就需要根据通道的整体信息来计算scale。具体计算公式如下：
+$$
+z_c = F_{sq}(u_c) = \frac{1}{W \times H} \sum_{i=1}^{W} \sum_{j=1}^{H} u_c(i, j)
+$$&lt;/p&gt;
+&lt;h3 id=&#34;excitation-操作&#34;&gt;Excitation 操作&lt;/h3&gt;
+&lt;p&gt;作者通过两个全连接来实现Excitation，第一个全连接把C个通道压缩成了C/r个通道来降低计算量，第二个全连接层再恢复至C个通道。其中， r指代压缩的比例，文中选用的r=16。此时网络的整体性能和计算量最平衡。&lt;/p&gt;
+&lt;h2 id=&#34;senet的应用&#34;&gt;SENet的应用&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/SENetPic/SENet-Image2.png&#34; alt=&#34;SENet实际应用&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图是SENet在实际应用中与其他网络结合的例子。左图展示的是SE-Inception结构；右图展示的是SE-ResNet结构，需要注意的是，SE的scale部分放在了ResNet的add结构之前。下表是SE-ResNet的具体的网络结构。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/SENetPic/SENet-Image3.png&#34; alt=&#34;SENet具体网络结构&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;实验结果&#34;&gt;实验结果&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/SENetPic/SENet-Image4.png&#34; alt=&#34;实验结果对比&#34;&gt;&lt;/p&gt;
+&lt;p&gt;作者使用ImageNet数据集，分别对不同深度，不同类型的SENet结构和非SENet结构进行测试，上图是实验结果。从表中可以看出，在计算复杂度只有微小提高的情况下，SENet结构要比非SENet结构的效果更好。&lt;/p&gt;</description>
+      
+    </item>
+    
+    <item>
+      <title>DenseNet</title>
+      <link>https://JuneCly.github.io/post/densenet/</link>
+      <pubDate>Fri, 28 Oct 2022 23:47:24 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/densenet/</guid>
+      
+        <description>&lt;p&gt;Dense Convolutional Network(DenseNet)是CVPR2017的最佳论文。与ResNet的思想类似，DenseNet建立了前面层与后面层之间的dense connection. 此外，DenseNet通过特征在通道上的链接来实现特征重用(feature reuse)。这些改进点让DenseNet在参数量和计算量更少的情况下实现了比ResNet更出色的效果。&lt;/p&gt;
+&lt;p&gt;论文链接： &lt;a href=&#34;https://arxiv.org/pdf/1608.06993.pdf&#34;&gt; Densely Connected Convolutional Networks &lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;densenet网络结构&#34;&gt;DenseNet网络结构&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/DenseNetPic/DenseNet-Image1.png&#34; alt=&#34;DenseNet网络结构图&#34;&gt;&lt;/p&gt;
+&lt;p&gt;上图为论文中给出的DenseNet网络结构图，共由五层的dense block组成，增长率k=4.&lt;/p&gt;
+&lt;p&gt;DenseNet网络结构的特点在于每一层网络都会与前面的所有层在channel维度上连接到一起，连接方式为concat（而非Resnet的对应相加方式），concat后的特征图作为下一层的输入部分。因此对于一个层数为L的网络，网络中共包括L(L+1)/2个连接。&lt;/p&gt;
+&lt;p&gt;通过cancat方式，DenseNet可以直接实现特征重用，让深层的网络也能够直接拿到之前几层网络的特征。这是DenseNet与ResNet的明显的区别之一。&lt;/p&gt;
+&lt;h3 id=&#34;dense-connectivity&#34;&gt;Dense connectivity&lt;/h3&gt;
+&lt;p&gt;为了进一步改善层与层之间的信息流，DenseNet提出了一种不同于ResNet的连接方式：引入了一种从任一层到后续所有层之间的直接连接。&lt;/p&gt;
+&lt;p&gt;第l层接收了之前所有层的特征图作为输入：
+$$
+X_l = H_l([ X_0, X_1, &amp;hellip;, X_{l-1} ])
+$$
+其中[]方括号圈起的部分表示将0层至l-1层的特征图进行连接。正是由于这样的密集连接，作者将该网络命名为DenseNet.&lt;/p&gt;
+&lt;h3 id=&#34;composite-function&#34;&gt;Composite function&lt;/h3&gt;
+&lt;p&gt;DenseNet中将
+$$
+H_l(·)
+$$
+定义为三个连续操作的复合函数，这三个操作分别是：BN，ReLU以及3x3的卷积层。&lt;/p&gt;
+&lt;h3 id=&#34;pooling-layers&#34;&gt;Pooling layers&lt;/h3&gt;
+&lt;p&gt;为了便于进行下采样的操作，在DenseNet网络架构中作者将网络划分为多个密集连接的Dense Block.将这些dense blocks之间进行卷积和池化的层称为transition layers. 实验中使用的&lt;strong&gt;trasition layer&lt;/strong&gt;由一个BN层和一个1x1的卷积层以及一个2x2的平均池化层组成。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/DenseNetPic/DenseNet-Image2.png&#34; alt=&#34;DenseNet网络结构图&#34;&gt;&lt;/p&gt;
+&lt;h3 id=&#34;growth-rate-k&#34;&gt;Growth rate k&lt;/h3&gt;
+&lt;p&gt;k是一个超参数，叫做学习率。如果每个H函数生成k个特征图，那么第l层就有
+$$
+k_0 + k\times(l-1)
+$$
+输入特征图，其中k0是输入层的通道数量。&lt;/p&gt;
+&lt;p&gt;一个相对小的学习率对于模型取得SOTA的水平起到了很好的作用。可以将特征图看作网络的全局的状态，而每一层都将自己的k的特征图添加到这一全局状态里。增长率u耳钉了每一层为全局状态提供多少新信息量。一旦将这些信息加入全局状态后，就可以从在该层之后的网络的任何位置对其进行访问。与传统的网络架构不同的是， 这种特征无需在层与层之间进行复制。&lt;/p&gt;
+&lt;h3 id=&#34;bottleneck-layers&#34;&gt;Bottleneck layers&lt;/h3&gt;
+&lt;p&gt;虽然学习率k通常取较小的数，即每层只提供k个特征图，但随着网络层数的增加，网络的参数量和计算量会变得很大。为此引入bottleneck layer，在每个3x3卷积之前引入1x1卷积作为“瓶颈”，进行将为操作，以减少输入特征图的数量。&lt;/p&gt;
+&lt;p&gt;下表是DenseNet的具体网络结构&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/DenseNetPic/DenseNet-Image3.png&#34; alt=&#34;DenseNet网络结构表&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;feature-reuse&#34;&gt;Feature Reuse&lt;/h2&gt;
+&lt;p&gt;DenseNet让每一层网络都能接触所有在其之前的网络层。通过实验画出热力图可以发现如下规律：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;较早层提取的特征直接被同一个Dense Block深层使用。&lt;/li&gt;
+&lt;li&gt;第2个和第3个dense block内的层始终为transition layer输出最小的权重，这表明transition layer输出了很多冗余特征。&lt;/li&gt;
+&lt;li&gt;尽管实验结果显示最终的分类层使用了整个dense block的权重，但似乎集中在最终的特征图上。这说明网络后期可能会产生一些更高级的特征。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;experitments&#34;&gt;Experitments&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/DenseNetPic/DenseNet-Image4.png&#34; alt=&#34;网络实验结果1&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://JuneCly.github.io/image/DenseNetPic/DenseNet-Image5.png&#34; alt=&#34;网络实验结果2&#34;&gt;&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;通过在具有同等大小的特征图的任意层之间增加连接的方式，DenseNet可以很轻易地拓展到数百层，并且没有显示出优化困难。DenseNet会随着参数数量的增加而不断提高准确性，并且不会出现性能下降或者过拟合的迹象。DenseNet使用了更少的的参数量和更少的计算量实现了SOTA水平。相信如果对DenseNet进一步调整超参数和学习率，该网络可以达到更好的效果。&lt;/p&gt;
+&lt;h2 id=&#34;densenet相比于resnet的改进之处&#34;&gt;DenseNet相比于ResNet的改进之处：&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;比ResNet拥有更少的参数数量&lt;/li&gt;
+&lt;li&gt;Bypass 加强了 feature reuse (特征重用)&lt;/li&gt;
+&lt;li&gt;网络更易于训练，并具有一定的正则效果&lt;/li&gt;
+&lt;li&gt;一定程度上缓解了梯度消失和网络退化问题&lt;/li&gt;
+&lt;/ul&gt;</description>
+      
+    </item>
     
     <item>
       <title>ResNet</title>
