@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Prompt（一）: 基础知识 - Chen LY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Chen LY" />
+  <meta name="description" content="prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.1" />
+
+
+<link rel="canonical" href="https://JuneCly.github.io/post/prompt-01/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa4b2b9f31b5c6d0b683db81157a9226e17b06e61911791ab547242a4a0556f2.css" integrity="sha256-&#43;ksrnzG1xtC2g9uBFXqSJuF7BuYZEXkatUckKkoFVvI=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="Prompt（一）: 基础知识" />
+<meta property="og:description" content="prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JuneCly.github.io/post/prompt-01/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-18T22:22:29+08:00" />
+<meta property="article:modified_time" content="2022-11-18T22:22:29+08:00" />
+
+<meta itemprop="name" content="Prompt（一）: 基础知识">
+<meta itemprop="description" content="prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。"><meta itemprop="datePublished" content="2022-11-18T22:22:29+08:00" />
+<meta itemprop="dateModified" content="2022-11-18T22:22:29+08:00" />
+<meta itemprop="wordCount" content="2692">
+<meta itemprop="keywords" content="prompt," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Prompt（一）: 基础知识"/>
+<meta name="twitter:description" content="prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Chen LY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Chen LY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">Prompt（一）: 基础知识</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-11-18" class="post-time">
+          2022-11-18
+        </time>
+        <div class="post-category">
+            <a href="https://JuneCly.github.io/categories/nlp/"> nlp </a>
+            <a href="https://JuneCly.github.io/categories/survey/"> survey </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-background-knowledge">1. Background Knowledge</a>
+      <ul>
+        <li><a href="#zero-shot-learning">Zero-shot Learning</a></li>
+        <li><a href="#few-shot-learning">Few-shot Learning</a></li>
+        <li><a href="#one-shot-learning">One-shot Learning</a></li>
+      </ul>
+    </li>
+    <li><a href="#2-two-sea-changes-in-nlp">2. Two Sea Changes in NLP</a>
+      <ul>
+        <li><a href="#feature-engineering">Feature Engineering</a></li>
+        <li><a href="#architecture-engineering">Architecture Engineering</a></li>
+        <li><a href="#objective-engineering">Objective Engineering</a></li>
+        <li><a href="#prompt-engineering">Prompt Engineering</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-a-formal-description-of-prompting">3. A Formal Description of Prompting</a>
+      <ul>
+        <li><a href="#supervised-learning-in-nlp">Supervised Learning in NLP</a></li>
+        <li><a href="#prompting-basics">Prompting Basics</a></li>
+        <li><a href="#design-considerations-for-prompting">Design Considerations for Prompting</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。</p>
+<h2 id="1-background-knowledge">1. Background Knowledge</h2>
+<p>本部分内容都可以分别展开详述，此处仅作简单概念介绍。</p>
+<h3 id="zero-shot-learning">Zero-shot Learning</h3>
+<p>Zero-shot Learning(ZSL)，又称零样本学习。ZSL的目标是让模型具有推断能力，能够根据一些具体的描述分类出在训练中不曾学习过的类别对象（Zero-shot的来源）。</p>
+<p><img src="/image/ShotLearningPic/zeroshot01.png" alt="Zeor-shot Example"></p>
+<p>举个例子，假设模型通过训练可以识别出马、老虎以及熊猫这三种类别的动物。并且能够从中抽取出不同类别的特征，比如：马的外形特征，老虎的条纹状特征以及熊猫的黑白色特征。此时当我们给出对于斑马的描述（外形像马、黑白色、条纹）时，我们希望模型能够识别出斑马。</p>
+<h3 id="few-shot-learning">Few-shot Learning</h3>
+<p>Few-shot Learning(FSL)，又称少样本学习。意思是面对一个新的类别，模型只需要少量的样本就能够学习。Few-shot Learning是Meta Learning（元学习）在监督学习领域的应用。</p>
+<p>该领域的一个常用术语叫做 <strong>N-way K-shot</strong>，表示在训练阶段，使用N个类别，每个类别K个样本的数据作为训练数据，让模型从小样本的数据中学习如果对这N个类别进行分类。</p>
+<h3 id="one-shot-learning">One-shot Learning</h3>
+<p>可以看作一种特殊情况下的Few-shot Learning，此时训练阶段不同类别的样本只有一个。</p>
+<h2 id="2-two-sea-changes-in-nlp">2. Two Sea Changes in NLP</h2>
+<h3 id="feature-engineering">Feature Engineering</h3>
+<p>早期的NLP模型依赖于&quot;Feature Engineering&quot;，工程师利用他们了解的领域内的知识从有限的数据中提取特征。</p>
+<h3 id="architecture-engineering">Architecture Engineering</h3>
+<p>神经网络面世之后，NLP领域的模型转向了&quot;Architecture Engineering&quot;。在这个阶段，模型自己学习特征</p>
+<h3 id="objective-engineering">Objective Engineering</h3>
+<p>从2017年至2019年，NLP领域迎来了一次巨变。有监督模型的重要性逐渐降低。这时期，人们将注意力转移到“预训练-微调”的模型范式上。在这种范式中，有着固定结构的模型作为语言模型被提前预训练好。这些语言模型可以在海量的数据集上进行预训练，在这个过程中模型就可以学习到这个语言相关的特征信息。经过预训练的语言模型接下来会通过微调应用于不同的下游任务。在这种范式中，人们的注意力主要在于&quot;Objective Engineering&quot;，即设计能应用在预训练阶段和微调阶段的训练目标。</p>
+<h3 id="prompt-engineering">Prompt Engineering</h3>
+<p>现在我们正处于NLP领域的第二次巨变的过程中，我们正由“预训练-微调”的范式过渡到“预训练-提示-预测”（pre-train, prompt, predict）范式。不同于之前通过objective engineering让预训练模型去适应不同的下游任务，prompt的重点在于借助“提示”的方法让下游任务可以直接在模型预训练的阶段进行训练。</p>
+<p>比如说对于情感分析任务，对于输入语句”我今天错过了公交车“，我们可以在后面加上”我感觉十分___“的提示语句，让模型用表达情感的词来填空。通过这种方法，我们可以操控预训练模型去预测我们想要的输出，有时甚至不需要额外的和具体任务相关的训练。</p>
+<p>prompt的优点在于：当我们给出合适的提示后，我们可以用一个无监督方式训练的语言模型去解决很多任务。</p>
+<p>这种范式应用的关键之处在于&quot;Prompt Emgineering&quot;，即为当前的语言模型找一个最合适的prompt。</p>
+<p><img src="/image/PromptPic/PromptPic01.png" alt="Four paradigms in NLP"></p>
+<h2 id="3-a-formal-description-of-prompting">3. A Formal Description of Prompting</h2>
+<h3 id="supervised-learning-in-nlp">Supervised Learning in NLP</h3>
+<p>NLP的传统监督学习模式下，我们通常选择文本作为输入x，通过模型P (y|x; θ)预测输出y。y可以是一个标签、文本或是其他形式的输出。为了学习到模型的中的参数，我们使用包含输入-输出对的数据集来训练模型，去预测条件概率。</p>
+<p>举例如下：</p>
+<p>1、文本分类：选用文本作为输入x，从固定的标签集中选择一个标签作为输出y。如情感分析。</p>
+<p>2、条件文本生成 conditional text generation：通过输入文本x生成另一个文本y。如机器翻译。</p>
+<h3 id="prompting-basics">Prompting Basics</h3>
+<p>有监督学习方式的主要问题在于，为了训练一个模型需要大量的带标签的数据集。但是对于许多任务来说，这样大量的数据集很难找到。NLP方向的基于提示的学习方法试图通过学习语言模型来避开这个问题。语言模型根据输入文本x直接学习概率，然后根据这个概率去预测y，以此来减少或避免对于大型的带标签的数据集的需求。</p>
+<p>本节给出提示的最基础的数学描述，既包含关于提示的许多工作，也可以扩展到其他的工作。</p>
+<p>基础的提示(Basic Prompting)通过<strong>三个步骤</strong>预测最高得分的输出y</p>
+<h4 id="step-1-prompt-addition-添加提示">Step 1: Prompt Addition 添加提示</h4>
+<p>需要一个提示函数fprompt(·)将输入x变为提示x’，在之前的大多数工作中，这一函数通常分为两步：</p>
+<p>1、使用一段包含两处空缺的文本作为模板。一个input slot用于输入[X]，一个answer slot用于输出中间生成答案[Z]，文本z将在后面被映射为y。</p>
+<p>2、将输入x填入slot[X]处。</p>
+<p>Notes:</p>
+<ul>
+<li>
+<p>prompt分类</p>
+<ul>
+<li><strong>cloze prompt</strong>: 将slot放在文本中间的位置。</li>
+<li><strong>prefix prompt</strong>: 将slot放在文本的末尾处。</li>
+</ul>
+</li>
+<li>
+<p>prompt不一定要是文字，也可以是虚拟文字（如数字id），或直接生成连续的向量</p>
+</li>
+<li>
+<p><input checked="" disabled="" type="checkbox"> 和[Z]的slots数量可以根据任务的需要灵活改变。</p>
+</li>
+</ul>
+<p><img src="/image/PromptPic/PromptPic02.png" alt="Terminology and notation of prompting methods"></p>
+<h4 id="step-2-answer-search">Step 2: Answer Search</h4>
+<p>这一步的目标是寻找一个是让LM得分最高的文本z。我们设定Z集合作为z的答案的集合。Z可以是自然语言的集合（适用于语言生成任务），也可以是固定词的集合（适用于文本分类任务）。</p>
+<p>我们接着定义一个函数 ffill(x′, z)，对于一个prompt x填入一个潜在答案z。我们把进行过这一操作的prompt称为filled prompt。如果提示里填写的是正确答案，我们称其为answered prompt</p>
+<p>最后，我们用预训练的语言模型在Z集合内的潜在答案中计算求对应的filled prompt的概率。</p>
+<h4 id="step-3-answer-mapping-答案映射">Step 3: Answer Mapping 答案映射</h4>
+<p>最后，我们要根据得分最高的答案z得到得分最高输出结果y。这一映射在大多数的情况下都是繁琐的，因为在一些场景下答案本身就是最后的输出结果。但对于情感分析这种文本分类任务来说，可能不同的z对应的输出y是相同的。所以需要有答案映射这一步骤。</p>
+<p><img src="/image/PromptPic/PromptPic03.png" alt="Examples of input, template, and answer for different tasks"></p>
+<h3 id="design-considerations-for-prompting">Design Considerations for Prompting</h3>
+<p>简单介绍一些设计提示是需要考虑的方面，更具体的细节在后续文章详细介绍：</p>
+<ul>
+<li><strong>Pre-trained Model Choice</strong>: 许多预训练模型都可以同来计算概率。</li>
+<li><strong>Prompt Engineering</strong>: 不同的prompt不仅对准确率有很大的影响，同样也有各自适合的不同任务。</li>
+<li><strong>Answer Engineering</strong>: 根据任务的不同，我们构建的Z集合以及相应的映射函数也不同。</li>
+<li><strong>Expanding the Paradigm</strong>: 上面提到的公式仅用来描述prompt中最基础一些模型架构。对于这个范式还有很多拓展的方法。</li>
+<li><strong>Prompt-based Training Strategies</strong>: 对于语言模型的参数，以及prompt的参数以及两者结合的参数的训练都有很多方法。在第7节会对不同的训练策略以及他们相应的优点进行总结。</li>
+</ul>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://JuneCly.github.io/tags/prompt/">prompt</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/self-attention/">
+            <span class="next-text nav-default">Self Attention</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://JuneCly.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        chen LY
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.dee43230127a73d039a734510fa896c89c3c7ce0cf0be0c7a7433f8fd69b76dc.js" integrity="sha256-3uQyMBJ6c9A5pzRRD6iWyJw8fODPC&#43;DHp0M/j9abdtw=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

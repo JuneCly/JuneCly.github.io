@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Chen LY</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Fri, 28 Oct 2022 23:56:33 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 18 Nov 2022 22:22:29 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Prompt（一）: 基础知识</title>
+      <link>https://JuneCly.github.io/post/prompt-01/</link>
+      <pubDate>Fri, 18 Nov 2022 22:22:29 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/prompt-01/</guid>
+      <description>&lt;p&gt;prompt是NLP领域最新兴起的预训练范式，其主要方法是在预训练的过程中结合输入文本给出与下游任务相关的提示，让模型在训练过程中进行预测。本篇博客主要介绍NLP领域语言模型的四个发展阶段、prompt基本形式的数学定义以及相关的背景知识。&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Self Attention</title>
       <link>https://JuneCly.github.io/post/self-attention/</link>
