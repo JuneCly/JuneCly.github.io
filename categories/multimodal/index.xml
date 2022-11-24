@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>multimodal on Chen LY</title>
+    <link>https://JuneCly.github.io/categories/multimodal/</link>
+    <description>Recent content in multimodal on Chen LY</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 24 Nov 2022 22:36:44 +0800</lastBuildDate><atom:link href="https://JuneCly.github.io/categories/multimodal/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>METER</title>
+      <link>https://JuneCly.github.io/post/meter/</link>
+      <pubDate>Thu, 24 Nov 2022 22:36:44 +0800</pubDate>
+      
+      <guid>https://JuneCly.github.io/post/meter/</guid>
+      <description>&lt;p&gt;CVPR 2022，微软发表的文章&lt;em&gt;&lt;strong&gt;An Empirical Study of Training End-to-End Vision and Language Transformers&lt;/strong&gt;&lt;/em&gt;围绕Vision-and-Language Pre-training (VLP)，提出了&lt;strong&gt;METER&lt;/strong&gt; 模型(&lt;strong&gt;M&lt;/strong&gt;ultimodal &lt;strong&gt;E&lt;/strong&gt;nd-to-end &lt;strong&gt;T&lt;/strong&gt;ransform&lt;strong&gt;ER&lt;/strong&gt;)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。&lt;/p&gt;
+&lt;p&gt;（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

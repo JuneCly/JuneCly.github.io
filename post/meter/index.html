@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="zh-cn" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>METER - Chen LY</title>
+  
+
+<meta name="renderer" content="webkit" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=yes"/>
+
+<meta name="MobileOptimized" content="width"/>
+<meta name="HandheldFriendly" content="true"/>
+
+
+<meta name="applicable-device" content="pc,mobile">
+
+<meta name="theme-color" content="#f8f5ec" />
+<meta name="msapplication-navbutton-color" content="#f8f5ec">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="#f8f5ec">
+
+<meta name="mobile-web-app-capable" content="yes">
+
+<meta name="author" content="Chen LY" />
+  <meta name="description" content="CVPR 2022，微软发表的文章An Empirical Study of Training End-to-End Vision and Language Transformers围绕Vision-and-Language Pre-training (VLP)，提出了METER 模型(Multimodal End-to-end TransformER)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。
+（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）
+" />
+
+  <meta name="keywords" content="Hugo, theme, jane" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.97.1" />
+
+
+<link rel="canonical" href="https://JuneCly.github.io/post/meter/" />
+
+
+
+
+
+<link rel="icon" href="/favicon.ico" />
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/sass/jane.min.fa4b2b9f31b5c6d0b683db81157a9226e17b06e61911791ab547242a4a0556f2.css" integrity="sha256-&#43;ksrnzG1xtC2g9uBFXqSJuF7BuYZEXkatUckKkoFVvI=" media="screen" crossorigin="anonymous">
+
+
+
+
+
+<meta property="og:title" content="METER" />
+<meta property="og:description" content="CVPR 2022，微软发表的文章An Empirical Study of Training End-to-End Vision and Language Transformers围绕Vision-and-Language Pre-training (VLP)，提出了METER 模型(Multimodal End-to-end TransformER)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。
+（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://JuneCly.github.io/post/meter/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2022-11-24T22:36:44+08:00" />
+<meta property="article:modified_time" content="2022-11-24T22:36:44+08:00" />
+
+<meta itemprop="name" content="METER">
+<meta itemprop="description" content="CVPR 2022，微软发表的文章An Empirical Study of Training End-to-End Vision and Language Transformers围绕Vision-and-Language Pre-training (VLP)，提出了METER 模型(Multimodal End-to-end TransformER)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。
+（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）"><meta itemprop="datePublished" content="2022-11-24T22:36:44+08:00" />
+<meta itemprop="dateModified" content="2022-11-24T22:36:44+08:00" />
+<meta itemprop="wordCount" content="7011">
+<meta itemprop="keywords" content="METER,Vision-and-Language," /><meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="METER"/>
+<meta name="twitter:description" content="CVPR 2022，微软发表的文章An Empirical Study of Training End-to-End Vision and Language Transformers围绕Vision-and-Language Pre-training (VLP)，提出了METER 模型(Multimodal End-to-end TransformER)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。
+（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）"/>
+
+<!--[if lte IE 9]>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js"></script>
+<![endif]-->
+
+<!--[if lt IE 9]>
+  <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+<![endif]-->
+
+
+
+
+</head>
+<body>
+  <div id="mobile-navbar" class="mobile-navbar">
+  <div class="mobile-header-logo">
+    <a href="/" class="logo">Chen LY</a>
+  </div>
+  <div class="mobile-navbar-icon">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</div>
+<nav id="mobile-menu" class="mobile-menu slideout-menu">
+  <ul class="mobile-menu-list">
+    <li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+        
+      </li><li class="mobile-menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+        
+      </li>
+    
+
+    
+  </ul>
+</nav>
+
+
+  
+
+  
+
+  
+
+  <header id="header" class="header container">
+    <div class="logo-wrapper">
+  <a href="/" class="logo">
+    
+      Chen LY
+    
+  </a>
+</div>
+
+<nav class="site-navbar">
+  <ul id="menu" class="menu">
+    
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/">This is Home</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/post/">Archives</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/tags/">Tags</a>
+          
+
+        
+
+      </li>
+    
+        <li class="menu-item">
+        
+          
+          
+            <a class="menu-item-link" href="https://JuneCly.github.io/categories/">Categories</a>
+          
+
+        
+
+      </li>
+    
+
+    
+    
+
+    
+  </ul>
+</nav>
+
+  </header>
+
+  <div id="mobile-panel">
+    <main id="main" class="main bg-llight">
+      <div class="content-wrapper">
+        <div id="content" class="content container">
+          <article class="post bg-white">
+    
+    <header class="post-header">
+      <h1 class="post-title">METER</h1>
+      
+      <div class="post-meta">
+        <time datetime="2022-11-24" class="post-time">
+          2022-11-24
+        </time>
+        <div class="post-category">
+            <a href="https://JuneCly.github.io/categories/multimodal/"> multimodal </a>
+            
+          </div>
+        
+
+        
+        
+
+        
+        
+      </div>
+    </header>
+
+    
+    
+<div class="post-toc" id="post-toc">
+  <h2 class="post-toc-title">Table of Contents</h2>
+  <div class="post-toc-content">
+    <nav id="TableOfContents">
+  <ul>
+    <li><a href="#1-introduction">1. Introduction</a></li>
+    <li><a href="#2-glossary-of-vlp-models">2. Glossary of VLP Models</a>
+      <ul>
+        <li><a href="#od-based-reigon-features">OD-based Reigon Features</a></li>
+        <li><a href="#cnn-based-grid-features">CNN-based Grid Features</a></li>
+        <li><a href="#vit-based-patch-features">ViT-based Patch Features</a></li>
+      </ul>
+    </li>
+    <li><a href="#3-the-meter-framework">3. The METER Framework</a>
+      <ul>
+        <li><a href="#31-model-architecture">3.1 Model Architecture</a></li>
+        <li><a href="#32-pre-training-objectives">3.2 Pre-training Objectives</a></li>
+        <li><a href="#33-our-default-settings-for-meter">3.3 Our Default Settings for METER</a></li>
+      </ul>
+    </li>
+    <li><a href="#4-experiments">4. Experiments</a>
+      <ul>
+        <li><a href="#41-impact-of-vision-and-language-encoders">4.1 Impact of Vision and Language Encoders</a></li>
+        <li><a href="#42-analysis-of-the-multimodal-fusion-module">4.2 Analysis of the Multimodal Fusion Module</a></li>
+        <li><a href="#43-encoder-only-vs-encoder-decoder">4.3 Encoder-Only vs Encoder-Decoder</a></li>
+        <li><a href="#44-ablations-on-pre-training-objectives">4.4 Ablations on Pre-training Objectives</a></li>
+        <li><a href="#45-comparison-with-prior-arts">4.5 Comparison with Prior Arts</a></li>
+      </ul>
+    </li>
+    <li><a href="#5-conclusion">5. Conclusion</a></li>
+  </ul>
+</nav>
+  </div>
+</div>
+
+    
+    <div class="post-content">
+      <p>CVPR 2022，微软发表的文章<em><strong>An Empirical Study of Training End-to-End Vision and Language Transformers</strong></em>围绕Vision-and-Language Pre-training (VLP)，提出了<strong>METER</strong> 模型(<strong>M</strong>ultimodal <strong>E</strong>nd-to-end <strong>T</strong>ransform<strong>ER</strong>)。本文偏向综述性质，对现有的VLP模型的框架及预训练任务进行了总结对比，并在大量实验结果的基础上给出了端到端的基于transformer的VLP模型框架：METER。</p>
+<p>（本篇博客也对论文中提到的相关VLP模型进行简单介绍并附上论文链接）</p>
+<p>原文： <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Dou_An_Empirical_Study_of_Training_End-to-End_Vision-and-Language_Transformers_CVPR_2022_paper.pdf">An Empirical Study of Training End-to-End Vision-and-Language Transformers </a></p>
+<h2 id="1-introduction">1. Introduction</h2>
+<p>Vision-and-language方向的任务，比如VQA，image-text retrieval都需要模型去理解图像和文本的输入内容。而VLP现在已经成为了用来解决这些问题的常用的方法。</p>
+<p>Transformer在NLP方向一直很流行，最近也在CV领域展示出了很大的潜力。几乎现有的VLP模型都使用Transformer作为模态融合模块的网络结构，使用预训练好的目标检测器从图像中提取区域特征(region feature)。</p>
+<p>但这种使用目标检测器来处理图像的模型架构存在一定的问题：</p>
+<ol>
+<li>目标检测器的效果并非完美，而且会在VLP阶段冻结，这会限制VLP模型的容量；</li>
+<li>目标检测器提取图像中的区域特征十分耗时；</li>
+</ol>
+<p>与此同时，视觉Transformer(ViTs)在处理计算机视觉方向的问题时的效果也展现了很大的前景。</p>
+<p>那么，是否能够训练一个使用ViTs作为图像编码器，整个模型完全由Transformer构成的VLP模型呢？</p>
+<p>最近一些试图使用视觉Transformer的模型并没有取得令人满意的效果，而且通常比SOTA水平的提取图像区域特征的VLP模型效果差。</p>
+<p>为了缩小这两类模型的差距，微软提出了METER(<strong>M</strong>ultimodal <strong>E</strong>nd-to-end <strong>T</strong>ransform<strong>ER</strong>)模型。在构建模型的过程中，微软详细调研了应该如何训练出一个完全由Transformer构成的端到端的VLP模型。</p>
+<p><img src="/image/METERPic/METERPic01.png" alt="An overview of the proposed METER framework"></p>
+<p>如上图所示，微软从不同的模型设计角度进行实验对比，对比方向如下：</p>
+<ul>
+<li><strong>vision encoders</strong> (e.g., CLIP-ViT, Swin transformer)</li>
+<li><strong>text encoders</strong> (e.g., RoBERTa, DeBERTa)</li>
+<li><strong>multimodal fusion module</strong> (e.g., merged attention vs. co-attention)</li>
+<li><strong>architectural design</strong> (e.g., encoder-only vs. encoder-decoder)</li>
+<li><strong>pre-training objectives</strong> (e.g., masked image modeling)</li>
+</ul>
+<p>经过大量的实验和测试，可以得出以下结论：</p>
+<ol>
+<li>Vision transformer (ViT) 在VLP中发挥的作用比language transformer大，而且transformer的在纯图像或纯文本任务上的表现并不能代表其在VL任务上的表现；</li>
+<li>使用交叉注意力 (cross-attention) 有利于多模态融合，在下游任务中的表现也比单独使用自注意力机制的效果好；</li>
+<li>对于VQA任务和零样本图文检索 (zero-shot image-text retrieval) 任务，只用Encoder的VLP模型要比使用Encoder-Decoder结构的VLP模型效果好；</li>
+<li>在VL模型预训练时，添加masked image modeling损失函数并不会提高下游任务的表现效果。</li>
+</ol>
+<p>根据这些建模技巧，本篇工作提出的METER模型，在VQAv2测试集上达到77.64 %的准确率，超过了先前最好的基于区域特征的VinVL模型1.04 %，超过了先前最好的基于ViT的模型 (ALBEF) 1.6%。</p>
+<h2 id="2-glossary-of-vlp-models">2. Glossary of VLP Models</h2>
+<p>本部分对VLP模型进行概述，并依据其对图像编码方式的不同将VLP模型分为三类</p>
+<p>对VLP模型结构的特点总结如下表：</p>
+<p><img src="/image/METERPic/METERPic02.png" alt="Glossary of representative VLP models"></p>
+<h3 id="od-based-reigon-features">OD-based Reigon Features</h3>
+<p>之前的大多数模型都使用预训练好的目标检测器(pre-trained object detectors)来提取图像特征。</p>
+<blockquote>
+<p>在这些模型之中，有的模型（如ViLBERT, LXMERT）用两个transformer分别处理图像和文本信息，再使用另一个co-attention transformer在后期对两种模态进行融合。</p>
+<p>还有的模型（如Visual-BERT, VL-BERT, UNITER）将图像和文本信息一起送入一个transformer，实现模态融合。</p>
+<p>OSCAR和VinVL将额外的图像标签送入transformer中，达到了VL任务的SOTA水平。</p>
+</blockquote>
+<p>但是，提取区域特征十分耗时，预训练好的目标检测器通常在预训练的时候参数固定，这会限制VLP模型的效果。</p>
+<ul>
+<li>
+<p><strong><a href="https://proceedings.neurips.cc/paper/2019/file/c74d97b01eae257e44aa9d5bade97baf-Paper.pdf">ViLBERT</a> （NeurIPS 2019）</strong></p>
+<p><strong>模型简介</strong>：</p>
+<p>以BERT模型作为基础，将模型拓展为<strong>多模态双流模型</strong>(multi-modal two-stream model)，分别处理视觉和文本信息的输入，通过co-attention的transformer层进行交互。在大规模的自动收集的概念描述的数据集上通过两个代理任务来进行模型的预训练，然后仅对基础模型做微小的改进后，将模型迁移到众多VL任务上，如VQA，视觉常识推理(visual commonsense reasoning)，指称表达(referring expression) 和基于描述的图像检索(caption-based image-retrieval)。实验结果表明ViLBERT模型比单独面向各个任务的特定模型的效果都更好。</p>
+<p><strong>模型结构图</strong>：</p>
+<p>下面分别是ViLBERT模型结构图和模型中使用的co-attention的transformer层结构图：</p>
+<p><img src="/image/METERPic/ViLBERT01.png" alt="ViLBERT model"></p>
+<p><img src="/image/METERPic/ViLBERT02.png" alt="ViLBERT co-attention transformer"></p>
+</li>
+<li>
+<p><strong><a href="https://arxiv.org/abs/1908.07490">LXMERT</a>  （EMNLP 2019）</strong></p>
+<p><strong>模型简介：</strong></p>
+<p>视觉语言推理任务需要模型学习视觉概念、文本语义以及两种模态之间的对齐和理解。LXMERT (Learning Cross-Modality Encoder Representations from Transformers) 模型就可以学习这些视觉-语言之间的关联。</p>
+<p><strong>模型结构图：</strong></p>
+<p><img src="/image/METERPic/LXMERT01.png" alt="LXMERT model"></p>
+</li>
+<li>
+<p><strong><a href="https://arxiv.org/abs/1908.08530">VL-BERT</a>  （ICLR 2020）</strong></p>
+<p><strong>模型简介：</strong></p>
+<p>VL-BERT在BERT基础上进行改进，将文本信息和RoI图像信息送入一个BERT中。</p>
+<p><strong>模型结构图：</strong></p>
+<p><img src="/image/METERPic/VL-BERT01.png" alt="LXMERT model"></p>
+</li>
+<li>
+<p><strong><a href="https://arxiv.org/abs/2004.06165">OSCAR</a>  （ECCV 2020）</strong></p>
+<p>OSCAR提出一种新的VLP方法：可以将VL模型的输入变成一个三元组形式，分别由Word Tokens，Object Tags和Region Features构成。可以帮助模型快速掌握文本和图像之间的语义对齐。本篇工作还提出了OSCAR模型，在多个VL任务上达到了新的SOTA。</p>
+<p><img src="/image/METERPic/OSCAR01.png" alt="OSCAR预训练范式"></p>
+<p><img src="/image/METERPic/OSCAR02.png" alt="OSCAR预训练模型"></p>
+</li>
+</ul>
+<h3 id="cnn-based-grid-features">CNN-based Grid Features</h3>
+<p>为了解决上面提到的两个问题，人们一直在尝试使用不同的方法来实现端到端的预训练VL模型。</p>
+<p>Pixel-BERT和CLIP-ViL将从CNN中提取的网格特征和文本信息直接送入Transformer中训练。</p>
+<p>SOHO提出先根据视觉词典(vision dictionary)将网格特征离散化，然后再将这些离散化特征送入跨模态模块。虽然直接使用网格特征高效，但不一致的优化器通常用于CNN和transformer。</p>
+<p>比如，Pixel-BERT和CLIP-ViL对transformer部分使用AdamW优化器，CNN部分使用SGD。最近关于vision transformers的工作表明，使用CNN比使用ViT的VLP模型的精度要略差一些，这也促使人们开发基于ViT的VLP模型。</p>
+<ul>
+<li>
+<p><strong><a href="https://arxiv.org/abs/2004.00849">Pixel-BERT</a>  （arXiv 2020）</strong></p>
+<p><strong>模型简介：</strong></p>
+<p>使用图像-句子对作为输入，输出每个输入元素的注意力特征。图像送入一个像素级特征embedding模块逐个像素运算，句子则被送入一个句子特征embedding模块逐个token运算。预训练方式使用MLM和ITM(Image-Text Matching)任务。</p>
+<p><strong>模型结构图：</strong></p>
+<p><img src="/image/METERPic/Pixel-BERT01.png" alt="ViLBERT model"></p>
+</li>
+<li>
+<p><strong><a href="https://arxiv.org/abs/2107.06383">CLIP-ViL</a>  （ICLR 2022）</strong></p>
+<p><strong>模型简介：</strong></p>
+<p>将CLIP直接应用于特定的任务的模型，称为CLIP-ViL，并对三个任务（VQA，Image Captioning，Vision-and-Language Navigation）进行微调。</p>
+</li>
+</ul>
+<h3 id="vit-based-patch-features">ViT-based Patch Features</h3>
+<p>ViLT直接将图像的patch features和文本token embeddings送入预训练的ViT模型中，然后在图像字幕的数据集上进行微调。但这些模型在诸如VQA的下游任务上的表现都逊于SOTA水平。</p>
+<p>在本文中，主要研究如何以端到端的方式预训练一个基于ViT的模型，让其在保持快速推理的同时缩小性能上的差距。</p>
+<ul>
+<li>
+<p><strong><a href="https://proceedings.mlr.press/v139/kim21k.html">ViLT</a> （ICML 2021）</strong></p>
+<p><strong>模型简介：</strong></p>
+<p>ViLT将Visual Embedding模块和Text Embedding都设计成轻量模块，将主要的计算都放在模态交互部分。ViLT首先直接使用预训练的ViT来初始化交互的Transformer，这样就可以直接利用交互层来处理图像特征。对于视觉模态，将图像分割成图像块，通过Linear Projection转化成Patch position embedding。对于文本模态，直接使用word embedding将文本转换成Token position embedding。两个模态得到的embedding分别和modal-type embedding进行concate，再和额外的[class] embedding进行concate，并于对接下游任务。将得到的embedding输入Transformer Encoder中。</p>
+<p>预训练过程中使用了两个优化目标：ITM(image text matching) 和MLM(masked language embedding)。</p>
+<p><strong>模型结构图：</strong></p>
+<p><img src="/image/METERPic/ViLT01.png" alt="ViLT model"></p>
+<p><strong>Visual Embedding Schema</strong>:</p>
+<p>VLP模型中textual embedder大多是都是BERT或者BERT的改进形式，但是visual embedders却不尽相同。绝大多是情况下，visual embedding是现有VLP模型的瓶颈部分。现有的visual embedding多数是提取<strong>region features</strong>或者<strong>grid features</strong>。ViLT模型使用<strong>Patch Projection</strong>（introduced by ViT）来减小计算开销，以便实现轻量目标。</p>
+<p><strong>VL模型的分类：</strong></p>
+<p>注：下图中各长方形的高代表了相关计算量大小。</p>
+<p><img src="/image/METERPic/ViLT02.png" alt="four categories of vision-and-language models"></p>
+</li>
+</ul>
+<h2 id="3-the-meter-framework">3. The METER Framework</h2>
+<p>根据之前的调研工作，我们定义了VLP模型中一些比较重要的模块，如下图。在这小节，我们会详细介绍METER的框架结构，以及相关默认设置。</p>
+<p><img src="/image/METERPic/METERPic01.png" alt="An overview of the proposed METER framework"></p>
+<p><strong>METER framework overview:</strong>（参考上图）</p>
+<p>给出文本语句l和图像v，VLP模型首先通过vision encoder和text encoder获取图像和文本的特征。然后将这些特征输入到多模态融合模块以生成跨模态的表示，接下来可以选择是否将其输入到decoder中或者直接生成最终想要的输出结果。</p>
+<h3 id="31-model-architecture">3.1 Model Architecture</h3>
+<h4 id="vision-encoder">Vision Encoder</h4>
+<p>在本文中，我们关注patch features以及探索将ViTs作为vision encoder的情况。ViT中，首先将图像先分割成patch，在将patches送入transformer中。但是，使用了ViTs的VLP模型并没有达到region-feature-based的VLP模型的SOTA水平。因此本文对系统性地对不同的ViTs进行实验，看哪一种更加适合VLP模型。</p>
+<blockquote>
+<p>本文中进行实验对比的ViT模型有：original ViT, DeiT, Distilled-DeiT, CaiT, VOLO, BeiT, Swin Transformer和CLIP-ViT.</p>
+</blockquote>
+<h4 id="text-encoder">Text Encoder</h4>
+<p>按照BERT和RoBERTa的做法，VLP模型通常将输入语句拆分成一系列的子词 (subwords)，然后再句首和句尾插入两个特别的token，得到输入文本序列。在得到text embedding之后，要么直接将其送入模态融合模块，或者在融合前先将其送入专门处理文本的网络层中。对于前者，因为文本编码和多模态融合的角色融合在一起，所以通常使用一个单独的BERT模型。但在本文中，我们希望将这一模块拆分成两个部分，先用一个text encoder对文本进行编码，再将得到的结果送入模态融合模块。</p>
+<blockquote>
+<p>虽然有很多不同的预训练LM种类，但大多数VLP模型仍然使用BERT来实现文本信息的初始化。在本文中，作者将BERT, RoBERTa, ELECTRA, ALBERT和DeBERTa作为text encoder进行实验。除此之外，也对由BERT初始化的word embedding look-up layer进行实验。</p>
+</blockquote>
+<h4 id="multimodal-fusion">Multimodal Fusion</h4>
+<p>对两种模态融合方式进行研究，分别是merged attention和co-attention（如下图）。</p>
+<p><img src="/image/METERPic/METERPic03.png" alt="merged attention &amp; co-attention"></p>
+<p>对于merged attention方式，只需将文本和图像信息拼接在一起，就可以送入一个transformer中进行训练。这种方式的优点是参数的高效性，对于两种模态使用一套参数即可。</p>
+<p>对于co-attention方式，需要先将文本和图像分别送入不同的transformer模块进行训练，然后再利用co-attention的方式让不同模态之间的信息实现交互。</p>
+<p>在reigon-based的VLP模型中，两种模态融合的方式实现的效果差不多，但随着端到端的VLP模型热度逐渐升高，这篇工作对两种模态融合方式得到的效果重新实验。</p>
+<h4 id="encoder-only-vs-encoder-decoder">Encoder-Only vs. Encoder-Decoder</h4>
+<p>许多VLP模型会使用encoder-only结构，将得到的跨模态表示直接送入输出层生成最终结果。但最近有一些模型（如：VL-T5, SimVLM）提倡使用encoder-decoder结构，即先将跨模态表示先送入decoder再送入输出层。在这种模型架构中，decoder既关注来自于encoder的representation，也关注之前生成的tokens。</p>
+<p>下图展示这两种结构在实现预训练MLM任务时的不同之处。</p>
+<p><img src="/image/METERPic/METERPic04.png" alt="encoder-only &amp; encoder-decoder"></p>
+<h3 id="32-pre-training-objectives">3.2 Pre-training Objectives</h3>
+<p>本部分先介绍广泛应用于VLP模型的MLM和ITM预训练任务，再介绍如何探索设计MIM任务。</p>
+<h4 id="masked-language-modeling">Masked Language Modeling</h4>
+<p>MLM任务一开始是应用在纯文本的预训练中的，但其在VLP中的有效性也得到认可。对于image-caption pair，我们随机遮盖一些输入token，训练模型根据被遮盖的字符以及相应的图像输入去还原文本。</p>
+<h4 id="image-text-matching">Image-Text Matching</h4>
+<p>在ITM任务中，模型需要在一系列image-caption pairs中判别哪些是匹配的，哪些不是。大多数VLP模型都将ITM看作一个二分类任务。</p>
+<h4 id="masked-image-modeling">Masked Image Modeling</h4>
+<p>类比MLM，研究人员尝试在图像端使用masked image modeling。比如，在之前的一些工作中（如LXMERT, UNITER）遮盖一些输入图像区域，然后训练模型去预测region feature，属于回归任务。也可以先用能够获得高层的语义信息的预训练目标检测器对每个区域生成一个对象标签，然后训练模型根据被遮盖的区域去直接预测标签，而不是预测region feature。</p>
+<p>但最近一些SOTA的VLP模型（ALBEF, VinVL）没有使用MIM预训练任务。在ViLT这篇工作中，作者也提出masked patch regression对他们的设置并没有起到帮助。MIM对于VLP模型是否有效并不确定。为了进一步研究MIM的作用，我们将MIM看作一个masked patch classification任务，并提出两种实现方式。</p>
+<h5 id="1-masked-patch-classification-with-in-batch-negatives">1) Masked Patch Classification with In-batch Negatives</h5>
+<p>构建候选集，预测时直接从候选集中选择。</p>
+<h5 id="2-masked-patch-classification-with-discrete-code">2) Masked Patch Classification with Discrete Code</h5>
+<p>受BEiT启发，获取输入patches的离散表示，然后训练模型去重构这些离散tokens。</p>
+<h3 id="33-our-default-settings-for-meter">3.3 Our Default Settings for METER</h3>
+<p>METER有很多不同的设计方式，在此部分介绍默认设置。</p>
+<h4 id="model-architecture">Model Architecture</h4>
+<p>使用co-attention方式实现模态融合。底部用一个预训练的visual encoder和一个text encoder。在每个encoder上叠加6个transformer编码层，每层都有一个自注意力模块，一个co-attention模块和一个前馈神经网络模块组成。模型中不包括decoder，图像和语言分支的参数也不共享。</p>
+<h4 id="pre-training-objectives">Pre-training Objectives</h4>
+<p>用MLM和ITM作为预训练任务。</p>
+<h4 id="pre-training-datasets">Pre-training Datasets</h4>
+<p>在四个最常用的数据集上进行预训练。数据集分别是：COCO, Conceptual Captions,  SBU Captions, Visual Genome，一共约有4M图片。</p>
+<h4 id="downstream-tasks">Downstream Tasks</h4>
+<p>对于消融实验和分析部分，我们主要使用VQAv2进行实验。为了对比SOTA水平，也对其他任务进行评估，如visual reasoning(NLVR2)，visual entailment(SNLI-VE)，image-text retrieval(COO, Flickr30k)。</p>
+<h2 id="4-experiments">4. Experiments</h2>
+<blockquote>
+<p>论文本部分内容主要是实验对比，故在此主要给出实验结果和相关结论。</p>
+</blockquote>
+<h3 id="41-impact-of-vision-and-language-encoders">4.1 Impact of Vision and Language Encoders</h3>
+<h4 id="without-vlp">without VLP</h4>
+<p>省去VLP预训练过程，底层使用预训练text encoder和vision encoder，顶层随机初始化后直接在具体的下游任务上进行微调测试。实验对比结果如下表所示</p>
+<p><img src="/image/METERPic/METERPic05.png" alt="vision and text encoders without pre-training"></p>
+<p><strong>结论</strong>：如果不进行VLP预训练，直接在下游任务上进行微调的话，text encoder中RoBERTa和Swin Transformer效果好，visual encoder中CLIP-ViT效果好。</p>
+<h4 id="with-vlp">with VLP</h4>
+<p>正如下表所示，加上VLP之后，text encoder方面BERT和RoBERTa之间的差距似乎消失了，但底层使用一个预训练好的text encoder还是十分必要的（对比Embed-only和BERT）。对于vision encoder来说，CLIP-ViT-224/16和Swin Transformer都能达到比较好的水平。</p>
+<p><img src="/image/METERPic/METERPic06.png" alt="different encoders"></p>
+<p><strong>Useful Tricks:</strong></p>
+<ul>
+<li>随机初始化的参数使用的学习率可以比由预训练模型初始化的参数使用的学习率大一些。</li>
+<li>在微调过程中提高图片的分辨率，得到的效果更好。</li>
+</ul>
+<h3 id="42-analysis-of-the-multimodal-fusion-module">4.2 Analysis of the Multimodal Fusion Module</h3>
+<p><strong>结论</strong>：对比co-attention和merged attention，发现co-attention的效果更好一些，说明对于不同模态训练不同的参数是十分必要的。</p>
+<p><img src="/image/METERPic/METERPic07.png" alt="co-att vs merged-att"></p>
+<h3 id="43-encoder-only-vs-encoder-decoder">4.3 Encoder-Only vs Encoder-Decoder</h3>
+<p><strong>结论</strong>：根据4.2小节的表可以看出，encoder-only模型的效果比encoder-decoder的效果好。但是encoder-decoder模型更灵活，更适合处理image captioning等任务。</p>
+<h3 id="44-ablations-on-pre-training-objectives">4.4 Ablations on Pre-training Objectives</h3>
+<p><strong>结论</strong>：根据下表，MLM和ITM都可以提升下游任务的效果。但是本篇工作中提出的两种MIM预训练任务会让实验结果变差。</p>
+<p><img src="/image/METERPic/METERPic08.png" alt="pre-training objectives"></p>
+<h3 id="45-comparison-with-prior-arts">4.5 Comparison with Prior Arts</h3>
+<p>对METER最好的模型架构进行测试评估，并与之前的工作进行对比，结果如下表。</p>
+<blockquote>
+<p><strong>best-performing models:</strong></p>
+<p>RoBERTa-base+Swin Transformer and RoBERTbase+CLIP-ViT-224/16 with co-attention fusion module, and with image resolutions set to 384 and 288, respectively</p>
+</blockquote>
+<p><img src="/image/METERPic/METERPic09.png" alt="evaluaion"></p>
+<p>除此之外，METER模型还具有可拓展性。如下表所示，模型可以在VQAv2上达到SOTA水平，超过了之前使用1.8B图像训练的模型的结果。</p>
+<p><img src="/image/METERPic/METERPic10.png" alt="Scaling the Model"></p>
+<h2 id="5-conclusion">5. Conclusion</h2>
+<p>本篇工作提出了METER模型架构，基于此对如何训练一个端到端的全部由transformer构成的VLP模型进行了系统全面的实验。实验结果表明，可以用4M图像对模型进行预训练，得到的效果可以和SOTA水平的模型相媲美。进一步扩大模型规模时，METER可以实现新的SOTA水平。</p>
+    </div>
+
+    
+    
+
+
+    
+    
+
+    <footer class="post-footer">
+      <div class="post-tags">
+          <a href="https://JuneCly.github.io/tags/meter/">METER</a>
+          <a href="https://JuneCly.github.io/tags/vision-and-language/">Vision-and-Language</a>
+          
+        </div>
+
+      
+      <nav class="post-nav">
+        
+        
+          <a class="next" href="/post/prompt-01/">
+            <span class="next-text nav-default">Prompt（一）: 基础知识</span>
+            <span class="prev-text nav-mobile">Next</span>
+            
+            <i class="iconfont">
+              <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="18" height="18">
+  <path d="M332.091514 74.487481l-75.369571 89.491197c-10.963703 12.998035-10.285251 32.864502 1.499144 44.378743l286.278095 300.375162L266.565125 819.058374c-11.338233 12.190647-11.035334 32.285311 0.638543 44.850487l80.46666 86.564541c11.680017 12.583596 30.356378 12.893658 41.662889 0.716314l377.434212-421.426145c11.332093-12.183484 11.041474-32.266891-0.657986-44.844348l-80.46666-86.564541c-1.772366-1.910513-3.706415-3.533476-5.750981-4.877077L373.270379 71.774697C361.493148 60.273758 343.054193 61.470003 332.091514 74.487481z"></path>
+</svg>
+
+            </i>
+          </a>
+      </nav>
+    </footer>
+  </article>
+
+  
+  
+
+  
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+    
+
+  
+
+  
+
+        </div>
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="icon-links">
+  
+
+
+<a href="https://JuneCly.github.io/index.xml" rel="noopener alternate" type="application/rss&#43;xml"
+    class="iconfont" title="rss" target="_blank">
+    <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="30" height="30">
+  <path d="M819.157333 1024C819.157333 574.592 449.408 204.8 0 204.8V0c561.706667 0 1024 462.293333 1024 1024h-204.842667zM140.416 743.04a140.8 140.8 0 0 1 140.501333 140.586667A140.928 140.928 0 0 1 140.074667 1024C62.72 1024 0 961.109333 0 883.626667s62.933333-140.544 140.416-140.586667zM678.784 1024h-199.04c0-263.210667-216.533333-479.786667-479.744-479.786667V345.173333c372.352 0 678.784 306.517333 678.784 678.826667z"></path>
+</svg>
+
+  </a>
+  
+</div>
+
+<div class="copyright">
+  <span class="power-by">
+    Powered by <a class="hexo-link" href="https://gohugo.io">Hugo</a>
+  </span>
+  <span class="division">|</span>
+  <span class="theme-info">
+    Theme - <a class="theme-link" href="https://github.com/xianmin/hugo-theme-jane">Jane</a>
+  </span>
+
+  <span class="copyright-year">
+    &copy;
+    2022
+    <span class="heart">
+      
+      <i class="iconfont">
+        <svg class="icon" viewBox="0 0 1025 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="14" height="14">
+  <path d="M1000.1 247.9c-15.5-37.3-37.6-70.6-65.7-98.9-54.4-54.8-125.8-85-201-85-85.7 0-166 39-221.4 107.4C456.6 103 376.3 64 290.6 64c-75.1 0-146.5 30.4-201.1 85.6-28.2 28.5-50.4 61.9-65.8 99.3-16 38.8-24 79.9-23.6 122.2 0.7 91.7 40.1 177.2 108.1 234.8 3.1 2.6 6 5.1 8.9 7.8 14.9 13.4 58 52.8 112.6 102.7 93.5 85.5 209.9 191.9 257.5 234.2 7 6.1 15.8 9.5 24.9 9.5 9.2 0 18.1-3.4 24.9-9.5 34.5-30.7 105.8-95.9 181.4-165 74.2-67.8 150.9-138 195.8-178.2 69.5-57.9 109.6-144.4 109.9-237.3 0.1-42.5-8-83.6-24-122.2z"
+   fill="#8a8a8a"></path>
+</svg>
+
+      </i>
+    </span><span class="author">
+        chen LY
+        
+      </span></span>
+
+  
+  
+
+  
+</div>
+
+    </footer>
+
+    <div class="back-to-top" id="back-to-top">
+      <i class="iconfont">
+        
+        <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="35" height="35">
+  <path d="M510.866688 227.694839 95.449397 629.218702l235.761562 0-2.057869 328.796468 362.40389 0L691.55698 628.188232l241.942331-3.089361L510.866688 227.694839zM63.840492 63.962777l894.052392 0 0 131.813095L63.840492 195.775872 63.840492 63.962777 63.840492 63.962777zM63.840492 63.962777"></path>
+</svg>
+
+      </i>
+    </div>
+  </div>
+  
+<script type="text/javascript" src="/lib/jquery/jquery-3.2.1.min.js"></script>
+  <script type="text/javascript" src="/lib/slideout/slideout-1.0.1.min.js"></script>
+
+
+
+
+<script type="text/javascript" src="/js/main.dee43230127a73d039a734510fa896c89c3c7ce0cf0be0c7a7433f8fd69b76dc.js" integrity="sha256-3uQyMBJ6c9A5pzRRD6iWyJw8fODPC&#43;DHp0M/j9abdtw=" crossorigin="anonymous"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

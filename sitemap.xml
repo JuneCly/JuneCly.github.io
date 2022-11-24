@@ -3,27 +3,62 @@
   
   <url>
     <loc>https://JuneCly.github.io/categories/</loc>
-    <lastmod>2022-11-18T22:22:29+08:00</lastmod>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/</loc>
-    <lastmod>2022-11-18T22:22:29+08:00</lastmod>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
-    <loc>https://JuneCly.github.io/categories/nlp/</loc>
-    <lastmod>2022-11-18T22:22:29+08:00</lastmod>
+    <loc>https://JuneCly.github.io/tags/meter/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/post/meter/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/categories/multimodal/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   
   <url>
     <loc>https://JuneCly.github.io/post/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/tags/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/tags/vision-and-language/</loc>
+    <lastmod>2022-11-24T22:36:44+08:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <url>
+    <loc>https://JuneCly.github.io/categories/nlp/</loc>
     <lastmod>2022-11-18T22:22:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
@@ -45,13 +80,6 @@
   
   <url>
     <loc>https://JuneCly.github.io/categories/survey/</loc>
-    <lastmod>2022-11-18T22:22:29+08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  
-  <url>
-    <loc>https://JuneCly.github.io/tags/</loc>
     <lastmod>2022-11-18T22:22:29+08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
